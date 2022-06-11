@@ -13,13 +13,13 @@ services:
     depends_on:
       - db
 
-  front:
-    container_name: dogs_front
-    build: ./front/dog_front
-    ports:
-      - '8080:8080'
-    depends_on:
-      - back
+#  front:
+#    container_name: dogs_front
+#    build: ./front/dog_front
+#    ports:
+#      - '8080:8080'
+#    depends_on:
+#      - back
 
   db:
     container_name: dogs_db
@@ -31,16 +31,17 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - pgdata:/var/lib/postgresql/data
+#      - pgdata:/var/lib/postgresql/data
+      - ./dbs/postgres-data:/var/lib/postgresql
 
   pgadmin:
     container_name: pg_admin4
     image: dpage/pgadmin4
     environment:
-      PGAMIN_DEFAULT_EMAIL: postgres@user.com
-      PGAMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_DEFAULT_EMAIL: postgres@user.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
     ports:
-      - "5050:80"
+      - '5050:80'
     depends_on:
       - db
 
