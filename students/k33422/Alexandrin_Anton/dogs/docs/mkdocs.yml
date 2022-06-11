@@ -29,3 +29,6 @@ nav:
 
 theme:
   name: material
+  palette:
+    accent: deep orange
+    primary: orange

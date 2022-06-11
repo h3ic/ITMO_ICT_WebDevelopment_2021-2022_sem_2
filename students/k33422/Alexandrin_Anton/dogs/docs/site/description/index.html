@@ -14,7 +14,7 @@
     
     
       
-        <title>/breed_experts/ - Dogshow</title>
+        <title>Description - Dogshow</title>
       
     
     
@@ -60,11 +60,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#shows-info-about-which-breeds-are-judged-by-an-expert" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -93,7 +88,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              /breed_experts/
+              Description
             
           </span>
         </div>
@@ -193,11 +188,19 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../description/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Description
       </a>
+      
     </li>
   
 
@@ -208,14 +211,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       
       
@@ -306,53 +307,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          /breed_experts/
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../breed_experts/" class="md-nav__link">
         /breed_experts/
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#success-responses" class="md-nav__link">
-    Success Responses
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -705,78 +664,45 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#success-responses" class="md-nav__link">
-    Success Responses
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                <h1 id="shows-info-about-which-breeds-are-judged-by-an-expert">Shows info about which breeds are judged by an expert</h1>
-<p>Shows info about which breeds are judged by an expert</p>
-<p><strong>URL</strong> : <code>/breed_experts/</code></p>
-<p><strong>Method</strong> : <code>GET</code></p>
-<p><strong>Auth required</strong> : NO</p>
-<p><strong>Permissions required</strong> : None</p>
-<p><strong>Data constraints</strong> : <code>{}</code></p>
-<h2 id="success-responses">Success Responses</h2>
-<p><strong>Code</strong> : <code>200 OK</code></p>
-<p><strong>Content</strong> : <code>[]</code></p>
-<pre><code class="language-json">[
-    {
-        &quot;breed&quot;: &quot;r&quot;,
-        &quot;experts&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;Juan&quot;,
-                &quot;last_name&quot;: &quot;Andreev&quot;,
-                &quot;club&quot;: &quot;Hunt&quot;,
-                &quot;ring&quot;: null
-            },
-            {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Anton&quot;,
-                &quot;last_name&quot;: &quot;Antonov&quot;,
-                &quot;club&quot;: &quot;Hunt&quot;,
-                &quot;ring&quot;: 1
-            }
-        ]
-    }
-]
-</code></pre>
+                  <h1>Description</h1>
+                
+                <p>Создать программную систему, предназначенную для организаторов ежегодных
+выставок собак. Выставки могут быть моно- и полипородные. Она должна обеспечивать
+хранение сведений о собаках - участниках выставок и экспертах. Участие может быть
+индивидуальным или от клуба. У выставки могут быть спонсоры, которые могут
+спонсировать разные выставки.
+Для каждой собаки в БД должны храниться сведения, о том, к какому клубу она
+относится, кличка, порода и возраст, классность, сведения о родословной (номер
+документа, клички родителей), дата последней прививки, фамилия, имя, отчество и
+паспортные данные хозяина. Перед соревнованиями собаки должны пройти обязательный
+медосмотр.
+Т.к. участие является платным, то хозяин обязан после регистрации до
+прохождения медосмотра должен оплатить счет и предоставить его организаторам.
+Собака допускается до соревнований, если она успешно прошла медосмотр.
+Сведения об эксперте должны включать фамилию и имя, номер ринга, который он
+обслуживает, клуб, название клуба, в котором он состоит. Каждый ринг могут
+обслуживать несколько экспертов. Каждая порода собак выступает на своем ринге, но на
+одном и том же ринге в разное время могут выступать разные породы.
+Каждая собака должна выполнить 3 упражнения, за каждое из которых она
+получает баллы от каждого эксперта. Итогом выставки является определение медалистов
+по каждой породе по итоговому рейтингу.
+Организатор выставки должен иметь возможность добавить в базу нового
+участника или нового эксперта, снять эксперта с судейства, заменив его другим,
+отстранить собаку от участия в выставке.
+Организатору выставки могут потребоваться следующие сведения;
+ На каком ринге выступает заданный хозяин со своей собакой?
+ Какими породами представлен заданный клуб?
+ Сколько собак были отстранены от участия в выставке?
+ Какие эксперты обслуживают породу?
+ Количество участников по каждой породе?
+Необходимо предусмотреть возможность выдачи отчета о результатах заданной
+выставки (сколько всего участников, какие породы, сколько медалей по каждой породе).</p>
                 
               
               
@@ -796,7 +722,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../dismissed_count/" class="md-footer__link md-footer__link--prev" aria-label="Previous: /dismissed_count/&lt;id&gt;" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -805,20 +731,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              /dismissed_count/<id>
+              Home
             </div>
           </div>
         </a>
       
       
         
-        <a href="../report/" class="md-footer__link md-footer__link--next" aria-label="Next: /report/&lt;year&gt;" rel="next">
+        <a href="../experts/" class="md-footer__link md-footer__link--next" aria-label="Next: experts/&lt;id&gt;" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              /report/<year>
+              experts/<id>
             </div>
           </div>
           <div class="md-footer__button md-icon">
