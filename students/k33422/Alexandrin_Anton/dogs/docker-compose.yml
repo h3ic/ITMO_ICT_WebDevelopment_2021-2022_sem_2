@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  back:
+    build: ./back
+#    context: ./back
+#    dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+      -
+#  command: python manage.py runserver 0.0.0.0:8000
+#  environment:
+#    - DB_HOST=postgres
+#    - POSTGRES_NAME=postgres
+#    - POSTGRES_USER=postgres
+#    - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - postgres
+
+  front:
+    build: ./front
+#      context: ./front
+#      dockerfile: ./Dockerfile
+    ports:
+      - '8080:8080'
+
+    # command: npm run serve
+    # environment:
+    # - DB_HOST=postgres
+    # - POSTGRES_NAME=postgres
+    # - POSTGRES_USER=postgres
+    # - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - back
+
+  postgres:
+    image: postgres:alpine
+    restart: unless-stopped
+    hostname: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  pgadmin:
+    container_name: pg_admin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGAMIN_DEFAULT_EMAIL: postgres@user.com
+      PGAMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "5050:80"
+
+volumes:
+  pgdata:

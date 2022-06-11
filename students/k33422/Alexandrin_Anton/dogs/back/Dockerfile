@@ -1,10 +1,9 @@
 FROM python:3.8.12
 
-ENV docker_dog_app=/home/h3ic/ITMO_ICT_WebDevelopment_2021-2022_sem_2/students/k33422/Alexandrin_Anton/Lr1
+ENV docker_dog_app=/home/h3ic/ITMO_ICT_WebDevelopment_2021-2022_sem_2/students/k33422/Alexandrin_Anton/dogs/back
 RUN mkdir -p $docker_dog_app/dogshow
 
 WORKDIR $docker_dog_app/dogshow
-RUN ls -a
 
 COPY . $docker_dog_app
 
