@@ -787,7 +787,7 @@
 <li>Зайти в контейнер и выполнить миграции (https://www.mousedc.ru/learning/565-komanda-docker-konteyner/)</li>
 </ol>
 <h3 id="backend-dockerfile">Backend Dockerfile</h3>
-<pre><code>FROM python:3.8.12
+<pre><code class="language-dockerfile">FROM python:3.8.12
 
 ENV docker_dog_app=/home/h3ic/ITMO_ICT_WebDevelopment_2021-2022_sem_2/students/k33422/Alexandrin_Anton/dogs/back
 RUN mkdir -p $docker_dog_app/dogshow
@@ -804,7 +804,7 @@ EXPOSE 8000
 CMD python manage.py runserver 0.0.0.0:8000
 </code></pre>
 <h3 id="frontend-dockerfile">Frontend Dockerfile</h3>
-<pre><code>FROM node:lts-alpine
+<pre><code class="language-dockerfile">FROM node:lts-alpine
 
 ENV docker_dog_app=/home/h3ic/ITMO_ICT_WebDevelopment_2021-2022_sem_2/students/k33422/Alexandrin_Anton/dogs/front/dog_front
 

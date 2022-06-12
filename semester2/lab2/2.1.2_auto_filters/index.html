@@ -526,6 +526,40 @@
     Задание 2.1.2
   </a>
   
+    <nav class="md-nav" aria-label="Задание 2.1.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django-filters" class="md-nav__link">
+    Регистрируем django-filters и добавляем методы фильтрации по умолчанию:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Сортировка участников по дате вакцинации:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Фильтрация рингов по породе и по типу шоу, в котором был представлен ринг:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Фильтрация по возрасту в заданном промежутке:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -730,6 +764,40 @@
     Задание 2.1.2
   </a>
   
+    <nav class="md-nav" aria-label="Задание 2.1.2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django-filters" class="md-nav__link">
+    Регистрируем django-filters и добавляем методы фильтрации по умолчанию:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Сортировка участников по дате вакцинации:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Фильтрация рингов по породе и по типу шоу, в котором был представлен ринг:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Фильтрация по возрасту в заданном промежутке:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -753,6 +821,34 @@
 <li>сортировка по дате, поиск, поиск по полям из связной таблицы</li>
 <li>сортировка в диапазоне цен, дат или каких-либо других числовых значений</li>
 </ul>
+<h5 id="django-filters">Регистрируем django-filters и добавляем методы фильтрации по умолчанию:</h5>
+<pre><code class="language-python">'DEFAULT_FILTER_BACKENDS':
+        ['django_filters.rest_framework.DjangoFilterBackend']
+</code></pre>
+<h5 id="_1">Сортировка участников по дате вакцинации:</h5>
+<pre><code class="language-python">class ParticipantOrderedFilterView(generics.ListAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+    filter_backends = (filters.OrderingFilter,)
+    filterset_fields = 'vaccinated'
+</code></pre>
+<p><img alt="" src="../../imgs/filter4.png" /></p>
+<h5 id="_2">Фильтрация рингов по породе и по типу шоу, в котором был представлен ринг:</h5>
+<pre><code class="language-python">class RingSearchFilterView(generics.ListAPIView):
+    queryset = Ring.objects.all()
+    serializer_class = RingSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('breed', 'show__type')
+</code></pre>
+<p><img alt="" src="../../imgs/filter5.1.png" /></p>
+<p><img alt="" src="../../imgs/filter5.2.png" /></p>
+<h5 id="_3">Фильтрация по возрасту в заданном промежутке:</h5>
+<pre><code class="language-python">class ParticipantAgeRangeFilterView(generics.ListAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+    filterset_class = ParticipantAgeRangeFilter
+</code></pre>
+<p><img alt="" src="../../imgs/filter6.png" /></p>
                 
               
               

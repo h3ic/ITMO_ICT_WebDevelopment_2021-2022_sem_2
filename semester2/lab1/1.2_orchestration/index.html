@@ -768,7 +768,7 @@
    должна быть возможность подключиться к БД из приложения для работы с БД (Valentina DB).</li>
 </ol>
 <h3 id="docker-compose-file">Docker-compose file</h3>
-<pre><code>version: '3'
+<pre><code class="language-yaml">version: '3'
 
 services:
   back:
@@ -818,7 +818,7 @@ volumes:
   pgdata:
 </code></pre>
 <p>Для подключения postgresql изменим конфигурацию в settings.py:</p>
-<pre><code>DATABASES = {
+<pre><code class="language-python">DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
        'NAME': 'postgres',
