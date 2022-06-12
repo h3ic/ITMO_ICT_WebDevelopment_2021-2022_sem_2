@@ -5,8 +5,8 @@ from .serializers import *
 from .filters import *
 from .models import *
 from django.db.models.aggregates import Count, Sum
-# from django_filters import rest_framework as filters
 from rest_framework import filters
+from .pagination import CustomPagination
 
 
 class ExpertAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -158,3 +158,4 @@ class ParticipantAgeRangeFilterView(generics.ListAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
     filterset_class = ParticipantAgeRangeFilter
+    pagination_class = CustomPagination
