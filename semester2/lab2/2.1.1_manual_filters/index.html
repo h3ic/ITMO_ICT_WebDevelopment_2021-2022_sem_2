@@ -512,32 +512,33 @@
     Задание 2.1.1
   </a>
   
-    <nav class="md-nav" aria-label="Задание 2.1.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
+    Эндпоинты:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     Фильтрация выставок по году:
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#-" class="md-nav__link">
     Фильтрация выставок по году и типу выставок (моно- и полипородные):
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     Фильтрация участников по породе и возрасту:
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -757,32 +758,33 @@
     Задание 2.1.1
   </a>
   
-    <nav class="md-nav" aria-label="Задание 2.1.1">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
+    Эндпоинты:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     Фильтрация выставок по году:
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#-" class="md-nav__link">
     Фильтрация выставок по году и типу выставок (моно- и полипородные):
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
     Фильтрация участников по породе и возрасту:
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -808,12 +810,12 @@
 <li>принимает 2 параметра из url-адреса и выводит отфильтрованные данные. (GET, ListAPIView)</li>
 <li>принимает 2 параметра из url-адреса и выводит отфильтрованные данные, если пользователь авторизован и неотфильтрованные, если не авторизован. (GET, ListAPIView)</li>
 </ul>
-<p>Эндпоинты:</p>
+<h3 id="_1">Эндпоинты:</h3>
 <pre><code class="language-python">  path('shows_by_year/', ShowsByYearListView.as_view()),
   path('shows_by_year_type/', ShowsByYearTypeListView.as_view()),
   path('participants_by_breed_age/', ParticipantsByBreedAgeListView.as_view())
 </code></pre>
-<h5 id="_1">Фильтрация выставок по году:</h5>
+<h3 id="_2">Фильтрация выставок по году:</h3>
 <pre><code class="language-python">class ShowsByYearListView(generics.ListAPIView):
     serializer_class = ShowSerializer
 
@@ -827,7 +829,7 @@
         return queryset
 </code></pre>
 <p><img alt="" src="../../imgs/filter1.png" /></p>
-<h5 id="-">Фильтрация выставок по году и типу выставок (моно- и полипородные):</h5>
+<h3 id="-">Фильтрация выставок по году и типу выставок (моно- и полипородные):</h3>
 <pre><code class="language-python">class ShowsByYearTypeListView(generics.ListAPIView):
     serializer_class = ShowSerializer
 
@@ -844,7 +846,7 @@
         return queryset
 </code></pre>
 <p><img alt="" src="../../imgs/filter2.png" /></p>
-<h5 id="_2">Фильтрация участников по породе и возрасту:</h5>
+<h3 id="_3">Фильтрация участников по породе и возрасту:</h3>
 <pre><code class="language-python">class ParticipantsByBreedAgeListView(generics.ListAPIView):
     serializer_class = ParticipantSerializer
 
