@@ -30,6 +30,7 @@ class DismissedCountAPIView(generics.RetrieveAPIView):
     serializer_class = DismissedCountSerializer
     queryset = Show.objects.all()
 
+
 # leave name
 class BreedExpertsAPIView(generics.ListAPIView):
     serializer_class = BreedExpertsSerializer
@@ -55,6 +56,7 @@ class BreedCountAPIView(APIView):
         content = {'breed_count': breed_count}
         return Response(content)
 
+
 # class BreedCountAPIView(generics.ListAPIView):
 #     serializer_class = ParticipantSerializer
 #     lookup_url_kwarg = "breed"
@@ -71,15 +73,63 @@ class ReportAPIView(APIView):
     def get(self, request, year):
         participants = Show.objects.get(year=year).participants
         participant_count = participants.count()
-        breed_count = participants.values('breed').annotate(count=Count('breed'))
-        best_grades = Grade.objects.filter(ring__show__year=year)\
-            .values('participant')\
-            .annotate(ex_sum=Sum('final_grade'))\
+        breed_count = participants.values('breed').annotate(
+            count=Count('breed'))
+        best_grades = Grade.objects.filter(ring__show__year=year) \
+            .values('participant') \
+            .annotate(ex_sum=Sum('final_grade')) \
             .order_by()
-        medals = Participant.objects.values('breed')\
+        medals = Participant.objects.values('breed') \
             .annotate(medals_count=Count('medals'))
         content = {'participant_count': participant_count,
                    'breeds': breed_count,
                    'best_grades': best_grades,
                    'medals': medals}
         return Response(content)
+
+
+# FILTERS
+
+class ShowsByYearListView(generics.ListAPIView):
+    serializer_class = ShowSerializer
+
+    def get_queryset(self):
+        queryset = Show.objects.all()
+        year = self.request.query_params.get('year')
+
+        if year:
+            queryset = queryset.filter(year=year)
+
+        return queryset
+
+
+class ShowsByYearTypeListView(generics.ListAPIView):
+    serializer_class = ShowSerializer
+
+    def get_queryset(self):
+        queryset = Show.objects.all()
+        year = self.request.query_params.get('year')
+        type_ = self.request.query_params.get('type')
+
+        print(year, type_)
+
+        if year and type_:
+            queryset = queryset.filter(year=year, type=type_)
+
+        return queryset
+
+
+class ParticipantsByBreedAgeListView(generics.ListAPIView):
+    serializer_class = ParticipantSerializer
+
+    def get_queryset(self):
+        queryset = Participant.objects.all()
+        user = self.request.user
+
+        if user.is_authenticated:
+            breed = self.request.query_params.get('breed')
+            age = self.request.query_params.get('age')
+            if breed and age:
+                queryset = queryset.filter(breed=breed, age=age)
+
+        return queryset

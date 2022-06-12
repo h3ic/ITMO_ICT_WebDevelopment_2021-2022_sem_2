@@ -64,3 +64,9 @@ class BreedExpertsSerializer(serializers.ModelSerializer):
         model = Ring
         fields = ["breed", "experts"]
 
+
+class ShowSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Show
+        fields = "__all__"
