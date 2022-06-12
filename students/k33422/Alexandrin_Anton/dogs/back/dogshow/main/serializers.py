@@ -70,3 +70,10 @@ class ShowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Show
         fields = "__all__"
+
+
+class GradeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Grade
+        fields = "__all__"

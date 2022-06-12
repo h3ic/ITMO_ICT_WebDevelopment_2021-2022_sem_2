@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'main',
+    'django_filters'
 ]
 
 AUTH_USER_MODEL = 'main.Organizer'
@@ -98,15 +99,15 @@ WSGI_APPLICATION = 'dogshow.wsgi.application'
 # }
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'postgres',
-       'USER': 'postgres',
-       'PASSWORD': 'postgres',
-       # 'HOST': '127.0.0.1',
-       'HOST': 'db',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
 }
 
 # Password validation
@@ -135,6 +136,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS':
+        ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # Internationalization

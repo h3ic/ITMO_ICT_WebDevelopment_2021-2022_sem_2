@@ -2,8 +2,11 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView, Response
 from .serializers import *
+from .filters import *
 from .models import *
 from django.db.models.aggregates import Count, Sum
+# from django_filters import rest_framework as filters
+from rest_framework import filters
 
 
 class ExpertAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -133,3 +136,25 @@ class ParticipantsByBreedAgeListView(generics.ListAPIView):
                 queryset = queryset.filter(breed=breed, age=age)
 
         return queryset
+
+
+# AUTO FILTERS
+
+class ParticipantOrderedFilterView(generics.ListAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+    filter_backends = (filters.OrderingFilter,)
+    filterset_fields = 'vaccinated'
+
+
+class RingSearchFilterView(generics.ListAPIView):
+    queryset = Ring.objects.all()
+    serializer_class = RingSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('breed', 'show__type')
+
+
+class ParticipantAgeRangeFilterView(generics.ListAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+    filterset_class = ParticipantAgeRangeFilter

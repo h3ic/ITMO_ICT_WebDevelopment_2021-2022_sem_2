@@ -15,7 +15,15 @@ urlpatterns = [
     path('breeds_count/', BreedCountAPIView.as_view()),
     path('report/<int:year>', ReportAPIView.as_view()),
 
+    # filters
     path('shows_by_year/', ShowsByYearListView.as_view()),
     path('shows_by_year_type/', ShowsByYearTypeListView.as_view()),
-    path('participants_by_breed_age/', ParticipantsByBreedAgeListView.as_view())
+    path('participants_by_breed_age/', ParticipantsByBreedAgeListView.as_view()),
+
+    path('participants_vaccination_order/',
+         ParticipantOrderedFilterView.as_view()),
+    path('rings_search/', RingSearchFilterView.as_view()),
+    path('participant_age_range/',
+         ParticipantAgeRangeFilterView.as_view())
+
 ]
