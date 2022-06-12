@@ -512,6 +512,33 @@
     Задание 2.1.1
   </a>
   
+    <nav class="md-nav" aria-label="Задание 2.1.1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Фильтрация выставок по году:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Фильтрация выставок по году и типу выставок (моно- и полипородные):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Фильтрация участников по породе и возрасту:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -730,6 +757,33 @@
     Задание 2.1.1
   </a>
   
+    <nav class="md-nav" aria-label="Задание 2.1.1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Фильтрация выставок по году:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Фильтрация выставок по году и типу выставок (моно- и полипородные):
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Фильтрация участников по породе и возрасту:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -754,6 +808,59 @@
 <li>принимает 2 параметра из url-адреса и выводит отфильтрованные данные. (GET, ListAPIView)</li>
 <li>принимает 2 параметра из url-адреса и выводит отфильтрованные данные, если пользователь авторизован и неотфильтрованные, если не авторизован. (GET, ListAPIView)</li>
 </ul>
+<p>Эндпоинты:</p>
+<pre><code>  path('shows_by_year/', ShowsByYearListView.as_view()),
+  path('shows_by_year_type/', ShowsByYearTypeListView.as_view()),
+  path('participants_by_breed_age/', ParticipantsByBreedAgeListView.as_view())
+</code></pre>
+<h5 id="_1">Фильтрация выставок по году:</h5>
+<pre><code>class ShowsByYearListView(generics.ListAPIView):
+    serializer_class = ShowSerializer
+
+    def get_queryset(self):
+        queryset = Show.objects.all()
+        year = self.request.query_params.get('year')
+
+        if year:
+            queryset = queryset.filter(year=year)
+
+        return queryset
+</code></pre>
+<p><img alt="" src="../../imgs/filter1.png" /></p>
+<h5 id="-">Фильтрация выставок по году и типу выставок (моно- и полипородные):</h5>
+<pre><code>class ShowsByYearTypeListView(generics.ListAPIView):
+    serializer_class = ShowSerializer
+
+    def get_queryset(self):
+        queryset = Show.objects.all()
+        year = self.request.query_params.get('year')
+        type_ = self.request.query_params.get('type')
+
+        print(year, type_)
+
+        if year and type_:
+            queryset = queryset.filter(year=year, type=type_)
+
+        return queryset
+</code></pre>
+<p><img alt="" src="../../imgs/filter2.png" /></p>
+<h5 id="_2">Фильтрация участников по породе и возрасту:</h5>
+<pre><code>class ParticipantsByBreedAgeListView(generics.ListAPIView):
+    serializer_class = ParticipantSerializer
+
+    def get_queryset(self):
+        queryset = Participant.objects.all()
+        user = self.request.user
+
+        if user.is_authenticated:
+            breed = self.request.query_params.get('breed')
+            age = self.request.query_params.get('age')
+            if breed and age:
+                queryset = queryset.filter(breed=breed, age=age)
+
+        return queryset
+</code></pre>
+<p><img alt="" src="../../imgs/filter3.png" /></p>
                 
               
               
