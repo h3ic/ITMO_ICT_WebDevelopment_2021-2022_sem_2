@@ -5,7 +5,7 @@ from .serializers import *
 from .filters import *
 from .models import *
 from django.db.models.aggregates import Count, Sum
-from rest_framework import filters
+from rest_framework import filters, status
 from .pagination import CustomPagination
 
 
@@ -159,3 +159,27 @@ class ParticipantAgeRangeFilterView(generics.ListAPIView):
     serializer_class = ParticipantSerializer
     filterset_class = ParticipantAgeRangeFilter
     pagination_class = CustomPagination
+
+
+# FILE UPLOAD
+
+class ParticipantPhotoCreateView(generics.CreateAPIView):
+    queryset = ParticipantPhoto.objects.all()
+    serializer_class = ParticipantPhotoSerializer
+
+
+class MultipleParticipantPhotoCreateView(generics.CreateAPIView):
+    queryset = ParticipantPhoto.objects.all()
+    serializer_class = ParticipantPhotoSerializer
+
+    def post(self, request, *args, **kwargs):
+        files = request.FILES.getlist('file')
+
+        for file in files:
+            participant_id = request.POST.get('participant')
+            file = ParticipantPhoto(
+                participant=Participant.objects.get(id=participant_id),
+                file=file)
+            file.save()
+
+        return Response(str(request.data), status=status.HTTP_201_CREATED)

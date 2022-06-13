@@ -24,6 +24,11 @@ urlpatterns = [
          ParticipantOrderedFilterView.as_view()),
     path('rings_search/', RingSearchFilterView.as_view()),
     path('participant_age_range/',
-         ParticipantAgeRangeFilterView.as_view())
+         ParticipantAgeRangeFilterView.as_view()),
 
+    path('upload_participant_photo/',
+         ParticipantPhotoCreateView.as_view()),
+
+    path('upload_participant_photos/',
+         MultipleParticipantPhotoCreateView.as_view())
 ]

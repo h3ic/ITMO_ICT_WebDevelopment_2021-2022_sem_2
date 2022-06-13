@@ -77,3 +77,10 @@ class GradeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grade
         fields = "__all__"
+
+
+class ParticipantPhotoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ParticipantPhoto
+        fields = ['participant', 'file']

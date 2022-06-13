@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .validators import *
 
 
 class Organizer(AbstractUser):
@@ -112,6 +113,29 @@ class Grade(models.Model):
     expert = models.ForeignKey('Expert', on_delete=models.CASCADE)
     final_grade = models.IntegerField(blank=True, null=True)
 
-
     def __str__(self):
         return f'{self.participant.name} {self.ring} {self.expert}'
+
+
+def get_upload_path(instance, filename):
+    return f'participant_photo_{instance.participant.id}/{filename}'
+
+
+class ParticipantPhoto(models.Model):
+    participant = models.ForeignKey('Participant',
+                                    on_delete=models.CASCADE,
+                                    related_name='participant_photos')
+    file = models.FileField(
+        validators=[validate_file_size, validate_file_type],
+        upload_to=get_upload_path
+    )
+    file_name = models.CharField(max_length=100, blank=True, null=True)
+    file_size = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f'Photo of {str(self.participant)}'
+
+    def save(self, *args, **kwargs):
+        self.file_name = self.file.name
+        self.file_size = self.file.size
+        super(ParticipantPhoto, self).save(*args, **kwargs)

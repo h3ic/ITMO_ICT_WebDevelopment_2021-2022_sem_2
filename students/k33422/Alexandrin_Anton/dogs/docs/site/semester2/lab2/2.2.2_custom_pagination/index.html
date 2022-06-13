@@ -554,18 +554,19 @@
     Задание 2.2.2
   </a>
   
-    <nav class="md-nav" aria-label="Задание 2.2.2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    Добавим во вью с выводом участников пагинацию:
+    Кастомный класс пагинации:
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавим во вью с выводом участников пагинацию:
+  </a>
   
 </li>
       
@@ -743,18 +744,19 @@
     Задание 2.2.2
   </a>
   
-    <nav class="md-nav" aria-label="Задание 2.2.2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    Добавим во вью с выводом участников пагинацию:
+    Кастомный класс пагинации:
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавим во вью с выводом участников пагинацию:
+  </a>
   
 </li>
       
@@ -775,7 +777,7 @@
                 
                 <h4 id="222">Задание 2.2.2</h4>
 <p>Написать и применить метод пагинации, который, кроме обычного вывода вернет количество страниц пагинации и номер текущей страницы</p>
-<p>Кастомный класс пагинации:</p>
+<h3 id="_1">Кастомный класс пагинации:</h3>
 <pre><code class="language-python">from rest_framework import pagination
 from rest_framework.response import Response
 
@@ -792,7 +794,7 @@ class CustomPagination(pagination.PageNumberPagination):
             'num_pages': self.page.paginator.num_pages,
         })
 </code></pre>
-<h5 id="_1">Добавим во вью с выводом участников пагинацию:</h5>
+<h3 id="_2">Добавим во вью с выводом участников пагинацию:</h3>
 <pre><code class="language-python">class ParticipantAgeRangeFilterView(generics.ListAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
