@@ -579,41 +579,48 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    Сериализатор:
+    Валидаторы:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    Вью для загрузки одного файла:
+    Сериализатор:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    Вью для загрузки нескольких файлов:
+    Вью для загрузки одного файла:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
-    Загрузка одного файла:
+    Вью для загрузки нескольких файлов:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
-    Загрузка двух файлов:
+    Загрузка одного файла:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    Загрузка двух файлов:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     Ошибки:
   </a>
   
@@ -790,41 +797,48 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    Сериализатор:
+    Валидаторы:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    Вью для загрузки одного файла:
+    Сериализатор:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    Вью для загрузки нескольких файлов:
+    Вью для загрузки одного файла:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
-    Загрузка одного файла:
+    Вью для загрузки нескольких файлов:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
-    Загрузка двух файлов:
+    Загрузка одного файла:
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    Загрузка двух файлов:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     Ошибки:
   </a>
   
@@ -875,19 +889,35 @@ class ParticipantPhoto(models.Model):
         self.file_size = self.file.size
         super(ParticipantPhoto, self).save(*args, **kwargs)
 </code></pre>
-<h3 id="_1">Сериализатор:</h3>
+<h3 id="_1">Валидаторы:</h3>
+<pre><code class="language-python">def validate_file_size(file):
+    MAX_MB = 5
+    limit = MAX_MB * 1024 * 1024
+
+    if file.size &gt; limit:
+        raise ValidationError(f'The file size is more than {MAX_MB} MB.')
+
+
+def validate_file_type(file):
+    photo_extensions = ['image/png', 'image/jpeg']
+
+    content_type = magic.from_buffer(file.read(), mime=True)
+    if content_type not in photo_extensions:
+        raise ValidationError(f'Files of type {content_type} are not supported.')
+</code></pre>
+<h3 id="_2">Сериализатор:</h3>
 <pre><code class="language-python">class ParticipantPhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParticipantPhoto
         fields = ['participant', 'file']
 </code></pre>
-<h3 id="_2">Вью для загрузки одного файла:</h3>
+<h3 id="_3">Вью для загрузки одного файла:</h3>
 <pre><code class="language-python">class ParticipantPhotoCreateView(generics.CreateAPIView):
     queryset = ParticipantPhoto.objects.all()
     serializer_class = ParticipantPhotoSerializer
 </code></pre>
-<h3 id="_3">Вью для загрузки нескольких файлов:</h3>
+<h3 id="_4">Вью для загрузки нескольких файлов:</h3>
 <pre><code class="language-python">class MultipleParticipantPhotoCreateView(generics.CreateAPIView):
     queryset = ParticipantPhoto.objects.all()
     serializer_class = ParticipantPhotoSerializer
@@ -904,13 +934,13 @@ class ParticipantPhoto(models.Model):
 
         return Response(str(request.data), status=status.HTTP_201_CREATED)
 </code></pre>
-<h3 id="_4">Загрузка одного файла:</h3>
+<h3 id="_5">Загрузка одного файла:</h3>
 <p><img alt="" src="../../imgs/upload.png" /></p>
 <p><img alt="" src="../../imgs/file_uploaded.png" /></p>
-<h3 id="_5">Загрузка двух файлов:</h3>
+<h3 id="_6">Загрузка двух файлов:</h3>
 <p><img alt="" src="../../imgs/uploads.png" /></p>
 <p><img alt="" src="../../imgs/uploads_db.png" /></p>
-<h3 id="_6">Ошибки:</h3>
+<h3 id="_7">Ошибки:</h3>
 <p><img alt="" src="../../imgs/upload_error.png" /></p>
 <p><img alt="" src="../../imgs/upload_error2.png" /></p>
                 
