@@ -584,6 +584,47 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ready-appspy" class="md-nav__link">
+    Для регистрации сигналов добавим конфигурацию ready в apps.py:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    Сигнал 1: создание участника:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    Сигнал 2: обновление данных о вакцинации:
+  </a>
+  
+    <nav class="md-nav" aria-label="Сигнал 2: обновление данных о вакцинации:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Если поменять дату еще раз:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    Сигнал 3: удаление участника и логирование:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -732,6 +773,47 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ready-appspy" class="md-nav__link">
+    Для регистрации сигналов добавим конфигурацию ready в apps.py:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    Сигнал 1: создание участника:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    Сигнал 2: обновление данных о вакцинации:
+  </a>
+  
+    <nav class="md-nav" aria-label="Сигнал 2: обновление данных о вакцинации:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Если поменять дату еще раз:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    Сигнал 3: удаление участника и логирование:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -754,6 +836,42 @@
 <li>Сохраняет значения выбранных полей в таблице в специальные поля для хранения предыдущих значений при обновлении объекта.</li>
 <li>При удалении объекта записывает информацию об удалении в лог реализованный любым образом.</li>
 </ul>
+<h3 id="ready-appspy">Для регистрации сигналов добавим конфигурацию ready в apps.py:</h3>
+<pre><code class="language-python">class MainConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'main'
+
+    def ready(self):
+        from . import signals
+</code></pre>
+<h3 id="1">Сигнал 1: создание участника:</h3>
+<pre><code class="language-python">@receiver(post_save, sender=Participant)
+def create_participant(sender, instance, created, **kwargs):
+    if created:
+        print(f'Participant {instance.name} created\n')
+</code></pre>
+<p><img alt="" src="../imgs/signal1.png" /></p>
+<h3 id="2">Сигнал 2: обновление данных о вакцинации:</h3>
+<p>В модель участника добавлено поле previous_vaccination</p>
+<pre><code class="language-python">@receiver(pre_save, sender=Participant)
+def update_participant_vaccination(sender, instance, **kwargs):
+    prev_instance = Participant.objects.get(id=instance.id)
+    instance.previous_vaccination = prev_instance.vaccinated
+    print(f'Vaccination info for {instance.name} updated: \n'
+          f'was: {instance.previous_vaccination}\n'
+          f'now: {instance.vaccinated}\n')
+</code></pre>
+<p><img alt="" src="../../imgs/signal2.1.png" /></p>
+<p><img alt="" src="../../imgs/signal2.2.png" /></p>
+<h4 id="_1">Если поменять дату еще раз:</h4>
+<p><img alt="" src="../../imgs/signal2.3.png" /></p>
+<h3 id="3">Сигнал 3: удаление участника и логирование:</h3>
+<pre><code class="language-python">@receiver(pre_delete, sender=Participant)
+def delete_participant(sender, instance, **kwargs):
+    with open('deleted_participants_log.txt', 'a') as f:
+        f.write(f'Participant {instance.name} deleted\n')
+</code></pre>
+<p><img alt="" src="../../imgs/signal3.png" /></p>
                 
               
               
