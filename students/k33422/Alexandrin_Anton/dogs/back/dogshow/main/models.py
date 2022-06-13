@@ -22,6 +22,7 @@ class Participant(models.Model):
     breed = models.CharField(max_length=1, choices=breed_types)
     age = models.IntegerField()
     family = models.CharField(max_length=1000)
+    previous_vaccination = models.DateField(null=True, blank=True)
     vaccinated = models.DateField()
     owner_data = models.CharField(max_length=1000)
     dismissed = models.BooleanField()

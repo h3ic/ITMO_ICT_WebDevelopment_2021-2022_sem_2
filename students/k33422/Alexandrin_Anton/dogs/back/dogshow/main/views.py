@@ -183,3 +183,13 @@ class MultipleParticipantPhotoCreateView(generics.CreateAPIView):
             file.save()
 
         return Response(str(request.data), status=status.HTTP_201_CREATED)
+
+
+class ParticipantCreateAPIView(generics.CreateAPIView):
+    serializer_class = ParticipantSerializer
+    queryset = Participant.objects.all()
+
+
+class VaccinationUpdateAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = ParticipantVaccinationSerializer
+    queryset = Participant.objects.all()

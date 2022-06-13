@@ -30,5 +30,11 @@ urlpatterns = [
          ParticipantPhotoCreateView.as_view()),
 
     path('upload_participant_photos/',
-         MultipleParticipantPhotoCreateView.as_view())
+         MultipleParticipantPhotoCreateView.as_view()),
+
+    path('participant/',
+         ParticipantCreateAPIView.as_view()),
+
+    path('vaccination/<int:pk>',
+         VaccinationUpdateAPIView.as_view())
 ]

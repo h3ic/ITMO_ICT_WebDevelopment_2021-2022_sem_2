@@ -84,3 +84,10 @@ class ParticipantPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParticipantPhoto
         fields = ['participant', 'file']
+
+
+class ParticipantVaccinationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Participant
+        fields = ['name', 'previous_vaccination', 'vaccinated']
