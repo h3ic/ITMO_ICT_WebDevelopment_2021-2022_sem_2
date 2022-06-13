@@ -570,6 +570,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Модель файла - изображения участника:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Сериализатор:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Вью для загрузки одного файла:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Вью для загрузки нескольких файлов:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Загрузка одного файла:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Загрузка двух файлов:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -732,6 +774,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Модель файла - изображения участника:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Сериализатор:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Вью для загрузки одного файла:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Вью для загрузки нескольких файлов:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Загрузка одного файла:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Загрузка двух файлов:
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -753,6 +837,65 @@
 <li>Ендпоинт для загрузки файлов, с указанием внешнего ключа на связный объект и сохранением имени и размера файла в базе данных.</li>
 <li>Ендпоинт для сохранения нескольких файлов и валидации на максимальный размер файла и доступные для загрузки расширения файлов.</li>
 </ul>
+<h3 id="-">Модель файла - изображения участника:</h3>
+<pre><code class="language-python">def get_upload_path(instance, filename):
+    return f'participant_photo_{instance.participant.id}/{filename}'
+
+
+class ParticipantPhoto(models.Model):
+    participant = models.ForeignKey('Participant',
+                                    on_delete=models.CASCADE,
+                                    related_name='participant_photos')
+    file = models.FileField(
+        validators=[validate_file_size, validate_file_type],
+        upload_to=get_upload_path
+    )
+    file_name = models.CharField(max_length=100, blank=True, null=True)
+    file_size = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f'Photo of {str(self.participant)}'
+
+    def save(self, *args, **kwargs):
+        self.file_name = self.file.name
+        self.file_size = self.file.size
+        super(ParticipantPhoto, self).save(*args, **kwargs)
+</code></pre>
+<h3 id="_1">Сериализатор:</h3>
+<pre><code class="language-python">class ParticipantPhotoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ParticipantPhoto
+        fields = ['participant', 'file']
+</code></pre>
+<h3 id="_2">Вью для загрузки одного файла:</h3>
+<pre><code class="language-python">class ParticipantPhotoCreateView(generics.CreateAPIView):
+    queryset = ParticipantPhoto.objects.all()
+    serializer_class = ParticipantPhotoSerializer
+</code></pre>
+<h3 id="_3">Вью для загрузки нескольких файлов:</h3>
+<pre><code class="language-python">class MultipleParticipantPhotoCreateView(generics.CreateAPIView):
+    queryset = ParticipantPhoto.objects.all()
+    serializer_class = ParticipantPhotoSerializer
+
+    def post(self, request, *args, **kwargs):
+        files = request.FILES.getlist('file')
+
+        for file in files:
+            participant_id = request.POST.get('participant')
+            file = ParticipantPhoto(
+                participant=Participant.objects.get(id=participant_id),
+                file=file)
+            file.save()
+
+        return Response(str(request.data), status=status.HTTP_201_CREATED)
+</code></pre>
+<h3 id="_4">Загрузка одного файла:</h3>
+<p><img alt="" src="../../imgs/upload.png" /></p>
+<p><img alt="" src="../../imgs/file_uploaded.png" /></p>
+<h3 id="_5">Загрузка двух файлов:</h3>
+<p><img alt="" src="../../imgs/uploads.png" /></p>
+<p><img alt="" src="../../imgs/uploads_db.png" /></p>
                 
               
               
