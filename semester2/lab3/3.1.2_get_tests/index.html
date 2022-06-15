@@ -688,8 +688,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../3.1.4_patch_tests/" class="md-nav__link">
-        3.1.4 PATCH Tests
+      <a href="../3.1.4_put_tests/" class="md-nav__link">
+        3.1.4 PUT Tests
       </a>
     </li>
   
@@ -858,7 +858,7 @@
             'club': 1
         }
 
-        response = self.client.get(url, data, format='json')
+        response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)
 </code></pre>
@@ -927,7 +927,6 @@
                                     'age_max': '6',
                                     'ordering': 'age'
                                     },
-                                   data,
                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)
@@ -1020,7 +1019,7 @@
             ]
         }
 
-        response = self.client.get(url, {'search': 'poly'}, data, format='json')
+        response = self.client.get(url, {'search': 'poly'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)
 </code></pre>
