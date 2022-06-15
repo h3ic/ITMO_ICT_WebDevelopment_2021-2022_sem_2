@@ -145,6 +145,7 @@ class ParticipantOrderedFilterView(generics.ListAPIView):
     serializer_class = ParticipantSerializer
     filter_backends = (filters.OrderingFilter,)
     filterset_fields = 'vaccinated'
+    pagination_class = CustomPagination
 
 
 class RingSearchFilterView(generics.ListAPIView):
@@ -158,7 +159,6 @@ class ParticipantAgeRangeFilterView(generics.ListAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
     filterset_class = ParticipantAgeRangeFilter
-    pagination_class = CustomPagination
 
 
 # FILE UPLOAD

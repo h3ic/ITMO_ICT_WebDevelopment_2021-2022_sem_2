@@ -7,7 +7,7 @@ from django.db.models import ObjectDoesNotExist
 @receiver(post_save, sender=Participant)
 def create_participant(sender, instance, created, **kwargs):
     if created:
-        print(f'Participant {instance.name} created\n')
+        print(f'\nParticipant {instance.name} created')
 
 
 @receiver(pre_save, sender=Participant)

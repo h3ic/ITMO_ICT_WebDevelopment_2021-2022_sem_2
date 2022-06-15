@@ -2,11 +2,12 @@ from django.urls import path
 from .views import *
 
 
-app_name = "warriors_app"
+app_name = "main"
 
 urlpatterns = [
     path('experts/<int:pk>', ExpertAPIView.as_view()),
-    path('participants/<int:pk>', ParticipantAPIView.as_view()),
+    path('participants/<int:pk>', ParticipantAPIView.as_view(),
+         name='participants'),
 
     path('participant_ring/<int:pk>', ParticipantRingRetrieveAPIView.as_view()),
     path('club_breeds/<int:pk>', ClubBreedsRetrieveAPIView.as_view()),
@@ -22,9 +23,11 @@ urlpatterns = [
 
     path('participants_vaccination_order/',
          ParticipantOrderedFilterView.as_view()),
-    path('rings_search/', RingSearchFilterView.as_view()),
+    path('rings_search/', RingSearchFilterView.as_view(),
+         name='search_rings'),
     path('participant_age_range/',
-         ParticipantAgeRangeFilterView.as_view()),
+         ParticipantAgeRangeFilterView.as_view(),
+         name='participants_age_range'),
 
     path('upload_participant_photo/',
          ParticipantPhotoCreateView.as_view()),

@@ -83,7 +83,8 @@ class Expert(models.Model):
 class Club(models.Model):
     name = models.CharField(max_length=100)
     members = models.ManyToManyField('Participant',
-                                     related_name='club_members'
+                                     related_name='club_members',
+                                     blank=True,
                                      )
 
     def __str__(self):
