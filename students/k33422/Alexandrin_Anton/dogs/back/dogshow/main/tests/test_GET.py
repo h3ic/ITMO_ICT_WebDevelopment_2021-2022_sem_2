@@ -45,7 +45,7 @@ class GetParticipantTest(TestCase):
             'club': 1
         }
 
-        response = self.client.get(url, data, format='json')
+        response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)
 
@@ -114,7 +114,6 @@ class GetAgeRangeFilteredParticipantsTest(TestCase):
                                     'age_max': '6',
                                     'ordering': 'age'
                                     },
-                                   data,
                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)
@@ -207,6 +206,6 @@ class SearchRingTest(TestCase):
             ]
         }
 
-        response = self.client.get(url, {'search': 'poly'}, data, format='json')
+        response = self.client.get(url, {'search': 'poly'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), data)

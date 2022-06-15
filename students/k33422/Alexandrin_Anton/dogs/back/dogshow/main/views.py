@@ -203,3 +203,10 @@ class MedalCreateAPIView(generics.CreateAPIView):
 class GradeCreateAPIView(generics.CreateAPIView):
     serializer_class = GradeSerializer
     queryset = Grade.objects.all()
+
+
+class ExpertUpdateAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = ExpertSerializer
+    # serializer_class = ExpertUpdateSerializer
+    queryset = Expert.objects.all()
+

@@ -5,7 +5,7 @@ from .views import *
 app_name = "main"
 
 urlpatterns = [
-    path('experts/<int:pk>', ExpertAPIView.as_view()),
+    path('experts/<int:pk>', ExpertAPIView.as_view(), name='experts'),
     path('participants/<int:pk>', ParticipantAPIView.as_view(),
          name='participants'),
 
@@ -43,7 +43,8 @@ urlpatterns = [
          name='create_participant'),
 
     path('vaccination/<int:pk>',
-         VaccinationUpdateAPIView.as_view()),
+         VaccinationUpdateAPIView.as_view(),
+         name='update_vaccination'),
 
     path('create_medal/',
          MedalCreateAPIView.as_view(),
@@ -52,4 +53,8 @@ urlpatterns = [
     path('create_grade/',
          GradeCreateAPIView.as_view(),
          name='create_grade'),
+
+    path('update_expert/<int:pk>',
+         ExpertUpdateAPIView.as_view(),
+         name='update_expert'),
 ]

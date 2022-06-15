@@ -98,3 +98,10 @@ class MedalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medal
         fields = '__all__'
+
+
+class ExpertUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Expert
+        fields = ['club', 'ring']

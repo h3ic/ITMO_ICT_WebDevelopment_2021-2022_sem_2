@@ -5,7 +5,6 @@ from rest_framework import status
 # import base64
 # import tempfile
 # from PIL import Image
-
 from ..models import *
 
 
