@@ -64,6 +64,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#id" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -610,9 +615,53 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3.1.2 GET Tests
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         3.1.2 GET Tests
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    Получение участника по id
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Фильтрация участников по возрасту в интервале
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Поиск рингов по типу выставки из связной таблицы
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -714,6 +763,52 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    Получение участника по id
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Фильтрация участников по возрасту в интервале
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Поиск рингов по типу выставки из связной таблицы
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -722,7 +817,214 @@
                 
                   <h1>3.1.2 GET Tests</h1>
                 
-                
+                <h3 id="id">Получение участника по id</h3>
+<pre><code class="language-python">class GetParticipantTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Club.objects.create(
+            id=1,
+            name='Super Club',
+        )
+
+        Participant.objects.create(
+            id=1,
+            name='Beck',
+            breed='r',
+            age=5,
+            family='Unknown',
+            previous_vaccination='2021-05-06',
+            vaccinated='2022-05-06',
+            owner_data='Unknown',
+            dismissed=False,
+            club=Club.objects.get(id=1)
+        )
+
+    def test_get_participant(self):
+        url = reverse('main:participants', args=['1'])
+
+        data = {
+            'id': 1,
+            'name': 'Beck',
+            'breed': 'r',
+            'age': 5,
+            'family': 'Unknown',
+            'previous_vaccination': '2021-05-06',
+            'vaccinated': '2022-05-06',
+            'owner_data': 'Unknown',
+            'dismissed': False,
+            'medals': [],
+            'rings': [],
+            'club': 1
+        }
+
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<h3 id="_1">Фильтрация участников по возрасту в интервале</h3>
+<pre><code class="language-python">class GetAgeRangeFilteredParticipantsTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Club.objects.create(
+            id=1,
+            name='Duck'
+        )
+
+        Participant.objects.create(
+            id=1,
+            name='Woody',
+            breed='r',
+            age=5,
+            family='Unknown',
+            previous_vaccination='2021-05-06',
+            vaccinated='2022-05-06',
+            owner_data='Unknown',
+            dismissed=False,
+            club=Club.objects.get(id=1)
+        )
+
+        Participant.objects.create(
+            id=2,
+            name='Lisa',
+            breed='p',
+            age=8,
+            family='Unknown',
+            previous_vaccination='2021-05-06',
+            vaccinated='2022-05-06',
+            owner_data='Unknown',
+            dismissed=True,
+            club=Club.objects.get(id=1)
+        )
+
+    def test_age_range_filter_participants(self):
+        url = reverse('main:participants_age_range')
+
+        data = {
+            &quot;count&quot;: 1,
+            &quot;next&quot;: None,
+            &quot;previous&quot;: None,
+            &quot;results&quot;: [
+                {
+                    'id': 1,
+                    'name': 'Woody',
+                    'breed': 'r',
+                    'age': 5,
+                    'family': 'Unknown',
+                    'previous_vaccination': '2021-05-06',
+                    'vaccinated': '2022-05-06',
+                    'owner_data': 'Unknown',
+                    'dismissed': False,
+                    'medals': [],
+                    'rings': [],
+                    'club': 1
+                }
+            ]
+        }
+
+        response = self.client.get(url,
+                                   {'age_min': '3',
+                                    'age_max': '6',
+                                    'ordering': 'age'
+                                    },
+                                   data,
+                                   format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<h3 id="_2">Поиск рингов по типу выставки из связной таблицы</h3>
+<pre><code class="language-python">class SearchRingTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Club.objects.create(
+            id=1,
+            name='Super Club',
+        )
+
+        Participant.objects.create(
+            id=1,
+            name='Peckk',
+            breed='r',
+            age=5,
+            family='Unknown',
+            previous_vaccination='2021-05-06',
+            vaccinated='2022-05-06',
+            owner_data='Unknown',
+            dismissed=False,
+            club=Club.objects.get(id=1)
+        )
+
+        Expert.objects.create(
+            id=1,
+            name='Алиса',
+            last_name='Ушкина',
+            club='Tails'
+        )
+
+        Show.objects.create(
+            year=2001,
+            type='mono'
+        )
+        Show.objects.create(
+            year=2002,
+            type='poly'
+        )
+
+        Ring.objects.create(
+            id=1,
+            show=Show.objects.get(year=2001),
+            breed='p'
+        )
+        Ring.objects.create(
+            id=2,
+            show=Show.objects.get(year=2002),
+            breed='p'
+        )
+        Ring.objects.create(
+            id=3,
+            show=Show.objects.get(year=2002),
+            breed='b'
+        )
+
+    def test_search_rings(self):
+
+        ring1 = Ring.objects.get(id=1)
+        ring2 = Ring.objects.get(id=2)
+        ring3 = Ring.objects.get(id=3)
+        expert = Expert.objects.get(id=1)
+
+        ring1.experts.add(expert)
+        ring2.experts.add(expert)
+        ring3.experts.add(expert)
+
+        url = reverse('main:search_rings')
+
+        data = {
+            &quot;count&quot;: 2,
+            &quot;next&quot;: None,
+            &quot;previous&quot;: None,
+            &quot;results&quot;: [
+                {
+                    'id': 2,
+                    'show': 2002,
+                    'breed': 'p',
+                    'experts': [1]
+                },
+                {
+                    'id': 3,
+                    'show': 2002,
+                    'breed': 'b',
+                    'experts': [1]
+                }
+            ]
+        }
+
+        response = self.client.get(url, {'search': 'poly'}, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<p><img alt="" src="../../imgs/tests_get.png" /></p>
                 
               
               
