@@ -30,14 +30,26 @@ urlpatterns = [
          name='participants_age_range'),
 
     path('upload_participant_photo/',
-         ParticipantPhotoCreateView.as_view()),
+         ParticipantPhotoCreateView.as_view(),
+         name='create_participant_photo'
+         ),
 
     path('upload_participant_photos/',
-         MultipleParticipantPhotoCreateView.as_view()),
+         MultipleParticipantPhotoCreateView.as_view()
+         ),
 
-    path('participant/',
-         ParticipantCreateAPIView.as_view()),
+    path('create_participant/',
+         ParticipantCreateAPIView.as_view(),
+         name='create_participant'),
 
     path('vaccination/<int:pk>',
-         VaccinationUpdateAPIView.as_view())
+         VaccinationUpdateAPIView.as_view()),
+
+    path('create_medal/',
+         MedalCreateAPIView.as_view(),
+         name='create_medal'),
+
+    path('create_grade/',
+         GradeCreateAPIView.as_view(),
+         name='create_grade'),
 ]

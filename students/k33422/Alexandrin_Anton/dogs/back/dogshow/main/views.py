@@ -193,3 +193,13 @@ class ParticipantCreateAPIView(generics.CreateAPIView):
 class VaccinationUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ParticipantVaccinationSerializer
     queryset = Participant.objects.all()
+
+
+class MedalCreateAPIView(generics.CreateAPIView):
+    serializer_class = MedalSerializer
+    queryset = Medal.objects.all()
+
+
+class GradeCreateAPIView(generics.CreateAPIView):
+    serializer_class = GradeSerializer
+    queryset = Grade.objects.all()

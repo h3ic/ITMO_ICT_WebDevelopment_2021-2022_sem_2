@@ -91,3 +91,10 @@ class ParticipantVaccinationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ['name', 'previous_vaccination', 'vaccinated']
+
+
+class MedalSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Medal
+        fields = '__all__'
