@@ -23,13 +23,12 @@ nav:
           - '2.3.1 File upload & validation': semester2/lab2/2.3.1_file_upload_validation.md
           - '2.4.1 Signals': semester2/lab2/2.4.1_signals.md
       - Lab 3:
-          - '3.1 Tests': semester2/lab3/3.1_tests.md
-            - '3.1.1 Model Tests': semester2/lab3/3.1.1_model_tests.md
-            - '3.1.2 GET Tests': semester2/lab3/3.1.2_get_tests.md
-            - '3.1.3 POST Tests': semester2/lab3/3.1.3_post_tests.md
-            - '3.1.4 PATCH Tests': semester2/lab3/3.1.4_patch_tests.md
+          - '3.1.1 Model Tests': semester2/lab3/3.1.1_model_tests.md
+          - '3.1.2 GET Tests': semester2/lab3/3.1.2_get_tests.md
+          - '3.1.3 POST Tests': semester2/lab3/3.1.3_post_tests.md
+          - '3.1.4 PATCH Tests': semester2/lab3/3.1.4_patch_tests.md
       - Lab 4:
-            - '4.1.1 Filters interface': semester2/lab4/4.1.1_filters_interface.md
+          - '4.1.1 Filters interface': semester2/lab4/4.1.1_filters_interface.md
 
 theme:
   name: material
