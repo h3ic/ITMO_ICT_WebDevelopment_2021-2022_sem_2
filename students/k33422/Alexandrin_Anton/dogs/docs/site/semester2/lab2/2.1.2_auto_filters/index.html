@@ -835,6 +835,19 @@
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
     filterset_class = ParticipantAgeRangeFilter
+
+
+class ParticipantAgeRangeFilter(filters.FilterSet):
+    age = filters.RangeFilter()
+    ordering = filters.OrderingFilter(
+        fields=(
+            ('age', 'age'),
+        )
+    )
+
+    class Meta:
+        model = Participant
+        fields = ['age']
 </code></pre>
 <p><img alt="" src="../../imgs/filter6.png" /></p>
                 
