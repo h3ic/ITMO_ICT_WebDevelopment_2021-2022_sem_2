@@ -62,4 +62,10 @@ urlpatterns = [
     path('all_participants/', AllParticipantsView.as_view(), name='all_participants'),
     path('all_shows/', AllShowsView.as_view(),
          name='all_shows'),
+    path('participant_photo/', ParticipantPhotoView.as_view(),
+         name='participant_photo'),
+
+    path('update_participant/<int:pk>',
+         ParticipantUpdateAPIView.as_view(),
+         name='update_participant'),
 ]

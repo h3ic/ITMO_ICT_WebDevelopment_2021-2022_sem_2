@@ -5,10 +5,16 @@ import styled from 'styled-components';
 import {pagination} from "../utils";
 
 const $RingsContainer = styled.div`
-  margin: 100px auto;
+  margin: 250px auto;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  h2 {
+    position: absolute;
+    top: 220px;
+    left: 708px;
+  }
 `;
 
 const $TableContainer = styled.div`
@@ -72,6 +78,7 @@ const Rings = () => {
 
   return (
     <$RingsContainer>
+      <h2>Rings</h2>
       <$FiltersContainer>
         <fieldset>
           <legend>Type of shows</legend>

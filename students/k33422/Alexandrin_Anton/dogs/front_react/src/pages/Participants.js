@@ -10,7 +10,13 @@ const $ParticipantsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 250px;
+  
+  h2 {
+    position: absolute;
+    top: 220px;
+    left: 708px;
+  }
 `;
 
 const $TableContainer = styled.div`
@@ -19,7 +25,7 @@ const $TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  
   table {
     margin: 0 100px;
     height: 100%;
@@ -82,6 +88,7 @@ const Participants = () => {
 
   return (
     <$ParticipantsContainer>
+      <h2>Participants</h2>
       <$FiltersContainer>
         <p>Min age:</p>
         <Input type='number'

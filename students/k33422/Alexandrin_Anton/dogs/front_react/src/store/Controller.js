@@ -73,7 +73,7 @@ class Controller {
   getRings = (searchParams, page) => {
     const {breed, showType} = searchParams;
     // sorry :/
-    let searchString = `${breed},${showType}`;
+    let searchString;
     if (breed && showType) {
       searchString = `${breed},${showType}`;
     } else if (breed) {
@@ -126,6 +126,12 @@ class Controller {
       }
     }
     return axios.get(`${this.BACK}/participant_photo/`, params)
+      .then(({data}) => data);
+  }
+
+  updateParticipant = (id, info) => {
+    console.log(info);
+    return axios.patch(`${this.BACK}/update_participant/${id}`, info)
       .then(({data}) => data);
   }
 }

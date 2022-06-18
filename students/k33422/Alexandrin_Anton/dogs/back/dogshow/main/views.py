@@ -235,3 +235,19 @@ class AllParticipantsView(generics.ListAPIView):
 class AllShowsView(generics.ListAPIView):
     serializer_class = ShowSerializer
     queryset = Show.objects.all()
+
+
+class ParticipantPhotoView(generics.ListAPIView):
+    serializer_class = ParticipantPhotoSerializer
+
+    def get_queryset(self):
+        queryset = ParticipantPhoto.objects.all()
+        participant_id = self.request.query_params.get('participant_id')
+        queryset = queryset.filter(participant_id=participant_id)
+
+        return queryset
+
+
+class ParticipantUpdateAPIView(generics.RetrieveUpdateAPIView):
+    serializer_class = ParticipantSerializer
+    queryset = Participant.objects.all()

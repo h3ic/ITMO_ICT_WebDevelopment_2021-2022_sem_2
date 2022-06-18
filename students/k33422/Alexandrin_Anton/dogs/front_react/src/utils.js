@@ -17,7 +17,7 @@ const $Pagination = styled.div`
   column-gap: 10px;
 `;
 
-const $Button = styled.button`
+export const $Button = styled.button`
   cursor: pointer;
   background: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'};
   display: flex;

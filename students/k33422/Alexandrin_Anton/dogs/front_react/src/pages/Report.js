@@ -13,9 +13,15 @@ const $Container = styled.div`
     }
   }
 
-  margin: 100px auto;
+  margin: 250px auto;
   display: flex;
   justify-content: space-evenly;
+  
+  h2 {
+    position: absolute;
+    top: 220px;
+    left: 708px;
+  }
 `;
 
 const $ShowsContainer = styled.div`
@@ -58,7 +64,7 @@ const Report = () => {
 
   return (
     <$Container>
-
+      <h2>Reports</h2>
       <$ShowsContainer>
         {shows?.results.map((item, index) =>
           <$Button
