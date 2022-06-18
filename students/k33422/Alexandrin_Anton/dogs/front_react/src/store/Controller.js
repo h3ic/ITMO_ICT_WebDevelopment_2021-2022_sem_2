@@ -51,8 +51,13 @@ class Controller {
       .then(({data}) => data);
   }
 
-  getExperts = () => {
-    return axios.get(`${this.BACK}/all_experts/`)
+  getExperts = (page) => {
+    const params = {
+      params: {
+        page: page,
+      }
+    }
+    return axios.get(`${this.BACK}/all_experts/`, params)
       .then(({data}) => data);
   }
 
@@ -69,10 +74,24 @@ class Controller {
       .then(({data}) => data);
   }
 
-  getRings = (searchParams) => {
+  getRings = (searchParams, page) => {
+    const {breed, showType} = searchParams;
+    // sorry :/
+    let searchString = `${breed},${showType}`;
+    if (breed && showType) {
+      searchString = `${breed},${showType}`;
+    } else if (breed) {
+      searchString = breed;
+    } else if (showType) {
+      searchString = showType;
+    } else {
+      searchString = '';
+    }
+
     const params = {
       params: {
-        search: searchParams,
+        search: searchString,
+        page: page
       }
     }
     return axios.get(`${this.BACK}/rings_search/`, params)

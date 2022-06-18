@@ -154,6 +154,7 @@ class RingSearchFilterView(generics.ListAPIView):
     serializer_class = RingSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('breed', 'show__type')
+    pagination_class = CustomPagination
 
 
 class ParticipantAgeRangeFilterView(generics.ListAPIView):
@@ -221,6 +222,7 @@ class AllParticipantAPIView(generics.RetrieveAPIView):
 class AllExpertsView(generics.ListAPIView):
     serializer_class = ExpertSerializer
     queryset = Expert.objects.all()
+    pagination_class = CustomPagination
 
 
 class AllParticipantsView(generics.ListAPIView):

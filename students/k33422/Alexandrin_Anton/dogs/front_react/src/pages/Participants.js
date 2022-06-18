@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
 import {Checkbox, Input} from "@mui/material";
+import {pagination} from "../utils";
 
 const $ParticipantsContainer = styled.div`
   display: flex;
@@ -34,22 +35,6 @@ const $FiltersContainer = styled.div`
   flex-direction: column;
 `;
 
-const $Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 10px;
-`;
-
-const $Button = styled.button`
-  cursor: pointer;
-  background: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 10px;
-`;
-
 const Participants = () => {
   const {controller} = useController();
   const [participants, setParticipants] = useState();
@@ -72,25 +57,6 @@ const Participants = () => {
       .then((data) => setParticipants(data));
   }, [currPage, ageRange.min, ageRange.max, isOrdered]);
 
-  console.log('part', participants);
-
-  const pagination = () => {
-    const buttons = [];
-    for (let i = 1; i <= participants?.num_pages; i++) {
-      buttons.push(
-        <$Button onClick={() => setCurrPage(i)}
-                 isActive={participants?.page_number === i}>
-          {i}
-        </$Button>
-      );
-    }
-    return (
-      <$Pagination>
-        {buttons}
-      </$Pagination>
-    );
-  }
-
   const handleMinAgeChange = (e) => {
     setAgeRange(prevState => {
       return {
@@ -107,6 +73,10 @@ const Participants = () => {
         max: e.target.value
       }
     })
+  }
+
+  const handlePaginationClick = (pageNum) => {
+    setCurrPage(pageNum);
   }
 
   return (
@@ -162,7 +132,7 @@ const Participants = () => {
         </table>
         }
 
-        {pagination()}
+        {pagination(participants, handlePaginationClick)}
       </$TableContainer>
 
     </$ParticipantsContainer>

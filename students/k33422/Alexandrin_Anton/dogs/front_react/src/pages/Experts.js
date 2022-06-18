@@ -2,8 +2,12 @@ import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
+import {pagination} from "../utils";
 
 const $ExpertsContainer = styled.div`
+  h2 {
+    margin-top: 170px;
+  }
   table {
     margin: 100px auto;
     border-collapse: separate;
@@ -17,14 +21,20 @@ const $ExpertsContainer = styled.div`
 const Experts = () => {
   const {controller} = useController();
   const [experts, setExperts] = useState();
+  const [currPage, setCurrPage] = useState(1);
 
   useEffect(() => {
-    controller.getExperts()
+    controller.getExperts(currPage)
       .then((data) => setExperts(data));
-  }, []);
+  }, [currPage]);
+
+  const handlePaginationClick = (pageNum) => {
+    setCurrPage(pageNum);
+  }
 
   return (
     <$ExpertsContainer>
+      <h2>Experts</h2>
       {experts &&
       <table>
 
@@ -39,7 +49,7 @@ const Experts = () => {
         </thead>
 
         <tbody>
-        {experts.results.map((item, index) =>
+        {experts?.results.map((item, index) =>
           <tr key={index}>
             <td>{item.id}</td>
             <td>{item.name}</td>
@@ -51,6 +61,7 @@ const Experts = () => {
         </tbody>
       </table>
       }
+      {experts && pagination(experts, handlePaginationClick)}
     </$ExpertsContainer>
   )
 }

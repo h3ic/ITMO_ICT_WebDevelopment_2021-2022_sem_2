@@ -28,8 +28,6 @@ const Profile = () => {
       .then((data) => setProfileData(data));
   }, []);
 
-  console.log(profileData);
-
   return (
     <$FormContainer>
       <h2>Profile</h2>
