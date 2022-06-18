@@ -64,6 +64,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -624,9 +629,60 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3.1.3 POST Tests
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         3.1.3 POST Tests
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Создание медали
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Добавление участника со связанным объектом - Клубом
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавление оценки участника на конкретном ринге от конкретного эксперта
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    (Ринг связан с выставкой)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -639,8 +695,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../3.1.4_patch_tests/" class="md-nav__link">
-        3.1.4 PATCH Tests
+      <a href="../3.1.4_put_tests/" class="md-nav__link">
+        3.1.4 PUT Tests
       </a>
     </li>
   
@@ -714,6 +770,59 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Создание медали
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    Добавление участника со связанным объектом - Клубом
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавление оценки участника на конкретном ринге от конкретного эксперта
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    (Ринг связан с выставкой)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -722,7 +831,120 @@
                 
                   <h1>3.1.3 POST Tests</h1>
                 
-                
+                <h3 id="_1">Создание медали</h3>
+<pre><code class="language-python">class CreateMedalTest(TestCase):
+
+    def test_create_medal(self):
+        url = reverse('main:create_medal')
+
+        data = {
+            'id': 1,
+            'medal': 'g'
+        }
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<h3 id="-">Добавление участника со связанным объектом - Клубом</h3>
+<pre><code class="language-python">
+class CreateParticipantTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Club.objects.create(
+            id=1,
+            name='Duck'
+        )
+
+    def test_create_participant(self):
+        url = reverse('main:create_participant')
+
+        data = {
+            'id': 1,
+            'name': 'Meck',
+            'breed': 'r',
+            'age': 5,
+            'family': 'Unknown',
+            'previous_vaccination': '2021-05-06',
+            'vaccinated': '2022-05-06',
+            'owner_data': 'Unknown',
+            'dismissed': False,
+            'medals': [],
+            'rings': [],
+            'club': 1
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<h3 id="_2">Добавление оценки участника на конкретном ринге от конкретного эксперта</h3>
+<h3 id="_3">(Ринг связан с выставкой)</h3>
+<pre><code class="language-python">class CreateGradeTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Participant.objects.create(
+            id=1,
+            name='Geck',
+            breed='p',
+            age=5,
+            family='Unknown',
+            vaccinated='2022-06-05',
+            owner_data='Unknown',
+            dismissed=False
+        )
+
+        Expert.objects.create(
+            id=1,
+            name='Алиса',
+            last_name='Ушкина',
+            club='Tails'
+        )
+
+        Show.objects.create(
+            year=2001,
+            type='mono',
+        )
+
+        Ring.objects.create(
+            id=1,
+            show=Show.objects.get(year=2001),
+            breed='r'
+        )
+
+        Grade.objects.create(
+            id=2,
+            participant=Participant.objects.get(id=1),
+            ring=Ring.objects.get(id=1),
+            expert=Expert.objects.get(id=1),
+            final_grade=5
+        )
+
+    def test_create_grade(self):
+        url = reverse('main:create_grade')
+
+        show = Show.objects.get(year=2001)
+        participant = Participant.objects.get(id=1)
+        expert = Expert.objects.get(id=1)
+        ring = Ring.objects.get(id=1)
+
+        show.participants.add(participant)
+        ring.experts.add(expert)
+
+        data = {
+            'id': 1,
+            'participant': 1,
+            'ring': 1,
+            'expert': 1,
+            'final_grade': 5
+        }
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.json(), data)
+</code></pre>
+<p><img alt="" src="../../imgs/tests_post.png" /></p>
                 
               
               
@@ -758,13 +980,13 @@
       
       
         
-        <a href="../3.1.4_patch_tests/" class="md-footer__link md-footer__link--next" aria-label="Next: 3.1.4 PATCH Tests" rel="next">
+        <a href="../3.1.4_put_tests/" class="md-footer__link md-footer__link--next" aria-label="Next: 3.1.4 PUT Tests" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              3.1.4 PATCH Tests
+              3.1.4 PUT Tests
             </div>
           </div>
           <div class="md-footer__button md-icon">

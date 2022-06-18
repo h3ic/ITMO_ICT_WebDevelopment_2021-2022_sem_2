@@ -14,7 +14,7 @@
     
     
       
-        <title>3.1.4 PATCH Tests - Dogshow</title>
+        <title>3.1.4 PUT Tests - Dogshow</title>
       
     
     
@@ -64,6 +64,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -92,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              3.1.4 PATCH Tests
+              3.1.4 PUT Tests
             
           </span>
         </div>
@@ -638,9 +643,53 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3.1.4 PUT Tests
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        3.1.4 PATCH Tests
+        3.1.4 PUT Tests
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Обновление клуба,  в котором состоит эксперт
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Обновление даты вакцинации. Сигнал обновляет предыдущую дату, это также тестируется
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Обновление ринга (объекта из связного списка), на котором работал эксперт
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -714,15 +763,204 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Обновление клуба,  в котором состоит эксперт
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Обновление даты вакцинации. Сигнал обновляет предыдущую дату, это также тестируется
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Обновление ринга (объекта из связного списка), на котором работал эксперт
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                  <h1>3.1.4 PATCH Tests</h1>
+                  <h1>3.1.4 PUT Tests</h1>
                 
-                
+                <h3 id="_1">Обновление клуба,  в котором состоит эксперт</h3>
+<pre><code class="language-python">class UpdateExpertClubTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Expert.objects.create(
+            id=1,
+            name='Алиса',
+            last_name='Ушкина',
+            club='Tails',
+            ring=None
+        )
+
+    def test_update_club(self):
+        get_url = reverse('main:experts', args=['1'])
+        put_url = reverse('main:update_expert', args=['1'])
+
+        data = {
+            'id': 1,
+            'name': 'Алиса',
+            'last_name': 'Ушкина',
+            'club': 'Tails',
+            'ring': None
+        }
+
+        current_data = self.client.get(get_url, format='json')
+        self.assertEqual(current_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(current_data.json(), data)
+
+        data['club'] = 'Royal'
+
+        self.client.put(put_url, data, content_type='application/json')
+        changed_data = self.client.get(get_url, format='json')
+        self.assertEqual(changed_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(changed_data.json(), data)
+</code></pre>
+<h3 id="_2">Обновление даты вакцинации. Сигнал обновляет предыдущую дату, это также тестируется</h3>
+<pre><code class="language-python">class UpdateVaccinationTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Club.objects.create(
+            id=1,
+            name='Duck'
+        )
+
+        Participant.objects.create(
+            id=1,
+            name='Veck',
+            breed='r',
+            age=5,
+            family='Unknown',
+            previous_vaccination='2021-05-06',
+            vaccinated='2022-05-06',
+            owner_data='Unknown',
+            dismissed=False,
+            club=Club.objects.get(id=1)
+        )
+
+    def test_update_vaccination(self):
+        get_url = reverse('main:participants', args=['1'])
+        put_url = reverse('main:update_vaccination', args=['1'])
+
+        data = {
+            'id': 1,
+            'name': 'Veck',
+            'breed': 'r',
+            'age': 5,
+            'family': 'Unknown',
+            'previous_vaccination': '2021-05-06',
+            'vaccinated': '2022-05-06',
+            'owner_data': 'Unknown',
+            'dismissed': False,
+            'medals': [],
+            'rings': [],
+            'club': 1
+        }
+
+        current_data = self.client.get(get_url, format='json')
+        self.assertEqual(current_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(current_data.json(), data)
+
+        data['vaccinated'] = '2023-05-06'
+        data['previous_vaccination'] = '2022-05-06'
+
+        self.client.put(put_url, data, content_type='application/json')
+        changed_data = self.client.get(get_url, format='json')
+        self.assertEqual(changed_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(changed_data.json(), data)
+</code></pre>
+<h3 id="_3">Обновление ринга (объекта из связного списка), на котором работал эксперт</h3>
+<pre><code class="language-python">class UpdateExpertRingTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        Show.objects.create(
+            year=2001,
+            type='mono',
+        )
+
+        Ring.objects.create(
+            id=1,
+            show=Show.objects.get(year=2001),
+            breed='r'
+        )
+
+        Ring.objects.create(
+            id=2,
+            show=Show.objects.get(year=2001),
+            breed='p'
+        )
+
+        Expert.objects.create(
+            id=1,
+            name='Алиса',
+            last_name='Ушкина',
+            club='Tails',
+            ring=Ring.objects.get(id=1)
+        )
+
+    def test_update_ring(self):
+        get_url = reverse('main:experts', args=['1'])
+        put_url = reverse('main:update_expert', args=['1'])
+
+        data = {
+            'id': 1,
+            'name': 'Алиса',
+            'last_name': 'Ушкина',
+            'club': 'Tails',
+            'ring': 1
+        }
+
+        current_data = self.client.get(get_url, format='json')
+        self.assertEqual(current_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(current_data.json(), data)
+
+        data['ring'] = 2
+
+        self.client.put(put_url, data, content_type='application/json')
+        changed_data = self.client.get(get_url, format='json')
+        self.assertEqual(changed_data.status_code, status.HTTP_200_OK)
+        self.assertEqual(changed_data.json(), data)
+</code></pre>
+<p><img alt="" src="../../imgs/tests_put.png" /></p>
                 
               
               

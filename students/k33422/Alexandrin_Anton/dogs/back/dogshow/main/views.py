@@ -7,6 +7,7 @@ from .models import *
 from django.db.models.aggregates import Count, Sum
 from rest_framework import filters, status
 from .pagination import CustomPagination
+from django.views import generic
 
 
 class ExpertAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -210,3 +211,18 @@ class ExpertUpdateAPIView(generics.RetrieveUpdateAPIView):
     # serializer_class = ExpertUpdateSerializer
     queryset = Expert.objects.all()
 
+
+class AllParticipantAPIView(generics.RetrieveAPIView):
+    serializer_class = ParticipantSerializer
+    queryset = Participant.objects.all()
+
+
+class AllExpertsView(generics.ListAPIView):
+    serializer_class = ExpertSerializer
+    queryset = Expert.objects.all()
+
+
+class AllParticipantsView(generics.ListAPIView):
+    serializer_class = ParticipantSerializer
+    queryset = Participant.objects.all()
+    pagination_class = CustomPagination

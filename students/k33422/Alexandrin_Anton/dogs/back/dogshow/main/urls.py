@@ -57,4 +57,7 @@ urlpatterns = [
     path('update_expert/<int:pk>',
          ExpertUpdateAPIView.as_view(),
          name='update_expert'),
+
+    path('all_experts/', AllExpertsView.as_view(), name='all_experts'),
+    path('all_participants/', AllParticipantsView.as_view(), name='all_participants'),
 ]
