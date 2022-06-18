@@ -3,9 +3,7 @@ import axios from "axios";
 
 class Controller {
   isLogged = false;
-  userData;
-  expertsData;
-  particpantsData;
+  currParticipantId;
 
   constructor() {
     makeAutoObservable(this)
@@ -17,16 +15,14 @@ class Controller {
     this.isLogged = isLogged;
   }
 
-  // register = () => {
-  //   const authToken = localStorage.getItem('authToken')
-  //   if (authToken) {
-  //     axios.defaults.headers.common['Authorization'] = `token ${this.authToken}`
-  //   }
-  //   axios.post(`${this.BACK}/auth/token/users`)
-  //     .then(({data}) => {
-  //       // localStorage.setItem('token', data.auth_token)
-  //     })
-  // }
+  setCurrParticipantId = (id) => {
+    this.currParticipantId = id;
+  }
+
+  register = (form) => {
+    axios.post(`${this.BACK}/auth/users/`, form)
+      .then(({data}) => data)
+  }
 
   login = async (credentials) => {
     const response = await axios.post(`${this.BACK}/auth/token/login`,
@@ -115,6 +111,21 @@ class Controller {
 
   getBreedsCount = () => {
     return axios.get(`${this.BACK}/breeds_count/`, )
+      .then(({data}) => data);
+  }
+
+  getParticipant = (id) => {
+    return axios.get(`${this.BACK}/participants/${id}`)
+      .then(({data}) => data);
+  }
+
+  getParticipantPhoto = (id) => {
+    const params = {
+      params: {
+        participant_id: id
+      }
+    }
+    return axios.get(`${this.BACK}/participant_photo/`, params)
       .then(({data}) => data);
   }
 }

@@ -1,4 +1,5 @@
 import {observer} from "mobx-react";
+import {NavLink} from "react-router-dom";
 import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
@@ -117,7 +118,13 @@ const Participants = () => {
           {participants.results.map((item, index) =>
             <tr key={index}>
               <td>{item.id}</td>
-              <td>{item.name}</td>
+              <td>
+                <NavLink to={`/participant/${item.id}`}
+                         onClick={() =>
+                           controller.setCurrParticipantId(item.id)}>
+                  {item.name}
+                </NavLink>
+              </td>
               <td>{item.age}</td>
               <td>{item.breed}</td>
               <td>
