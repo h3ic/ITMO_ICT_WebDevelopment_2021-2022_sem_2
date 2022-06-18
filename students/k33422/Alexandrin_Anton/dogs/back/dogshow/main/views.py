@@ -160,6 +160,7 @@ class ParticipantAgeRangeFilterView(generics.ListAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
     filterset_class = ParticipantAgeRangeFilter
+    pagination_class = CustomPagination
 
 
 # FILE UPLOAD
@@ -226,3 +227,9 @@ class AllParticipantsView(generics.ListAPIView):
     serializer_class = ParticipantSerializer
     queryset = Participant.objects.all()
     pagination_class = CustomPagination
+    filterset_class = ParticipantAgeRangeFilter
+
+
+class AllShowsView(generics.ListAPIView):
+    serializer_class = ShowSerializer
+    queryset = Show.objects.all()

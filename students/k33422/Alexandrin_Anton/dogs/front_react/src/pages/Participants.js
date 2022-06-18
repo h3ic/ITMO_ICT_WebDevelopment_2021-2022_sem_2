@@ -2,12 +2,24 @@ import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
+import {Checkbox, Input} from "@mui/material";
 
 const $ParticipantsContainer = styled.div`
-  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+`;
+
+const $TableContainer = styled.div`
+  min-height: 250px;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   table {
-    margin: 100px auto;
+    margin: 0 100px;
     height: 100%;
     border-collapse: separate;
 
@@ -15,6 +27,11 @@ const $ParticipantsContainer = styled.div`
       padding: 5px 10px;
     }
   }
+`;
+
+const $FiltersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const $Pagination = styled.div`
@@ -38,10 +55,22 @@ const Participants = () => {
   const [participants, setParticipants] = useState();
   const [currPage, setCurrPage] = useState(1);
 
+  const [ageRange, setAgeRange] = useState({
+    min: null,
+    max: null
+  });
+
+  const [isOrdered, setOrdered] = useState(false);
+
   useEffect(() => {
-    controller.getParticipants(currPage)
+    controller.getParticipants(
+      currPage,
+      ageRange.min,
+      ageRange.max,
+      isOrdered
+    )
       .then((data) => setParticipants(data));
-  }, [currPage]);
+  }, [currPage, ageRange.min, ageRange.max, isOrdered]);
 
   console.log('part', participants);
 
@@ -62,44 +91,79 @@ const Participants = () => {
     );
   }
 
+  const handleMinAgeChange = (e) => {
+    setAgeRange(prevState => {
+      return {
+        ...prevState,
+        min: e.target.value
+      }
+    })
+  }
+
+  const handleMaxAgeChange = (e) => {
+    setAgeRange(prevState => {
+      return {
+        ...prevState,
+        max: e.target.value
+      }
+    })
+  }
+
   return (
     <$ParticipantsContainer>
-      {participants &&
-      <table>
+      <$FiltersContainer>
+        <p>Min age:</p>
+        <Input type='number'
+               onChange={handleMinAgeChange}/>
+        <p>Max age:</p>
+        <Input type='number'
+               onChange={handleMaxAgeChange}/>
 
-        <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>age</th>
-          <th>breed</th>
-          <th>dismissed</th>
-          <th>club</th>
-          <th>previous_vaccination</th>
-          <th>vaccinated</th>
-        </tr>
-        </thead>
+        <div style={{display: 'flex', marginTop: '10px'}}>
+          <Checkbox value={isOrdered}
+                    onChange={(e) => setOrdered(e.target.checked)}/>
+          <p>Order by vaccination date?</p>
+        </div>
+      </$FiltersContainer>
+      <$TableContainer>
 
-        <tbody>
-        {participants.results.map((item, index) =>
-          <tr key={index}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.age}</td>
-            <td>{item.breed}</td>
-            <td>
-              <input type='checkbox' value={item.dismissed}/>
-            </td>
-            <td>{item.club}</td>
-            <td>{item.previous_vaccination}</td>
-            <td>{item.vaccinated}</td>
+        {participants &&
+        <table>
+
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>age</th>
+            <th>breed</th>
+            <th>dismissed</th>
+            <th>club</th>
+            <th>previous_vaccination</th>
+            <th>vaccinated</th>
           </tr>
-        )}
-        </tbody>
-      </table>
-      }
+          </thead>
 
-      {pagination()}
+          <tbody>
+          {participants.results.map((item, index) =>
+            <tr key={index}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.age}</td>
+              <td>{item.breed}</td>
+              <td>
+                <Checkbox checked={item.dismissed}/>
+              </td>
+              <td>{item.club}</td>
+              <td>{item.previous_vaccination || '-'}</td>
+              <td>{item.vaccinated}</td>
+            </tr>
+          )}
+          </tbody>
+        </table>
+        }
+
+        {pagination()}
+      </$TableContainer>
 
     </$ParticipantsContainer>
   )

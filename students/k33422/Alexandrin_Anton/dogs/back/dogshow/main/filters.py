@@ -6,7 +6,7 @@ class ParticipantAgeRangeFilter(filters.FilterSet):
     age = filters.RangeFilter()
     ordering = filters.OrderingFilter(
         fields=(
-            ('age', 'age'),
+            ('vaccinated', 'age')
         )
     )
 

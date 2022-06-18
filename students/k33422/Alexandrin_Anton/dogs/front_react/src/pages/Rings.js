@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
 
-const $ExpertsContainer = styled.div`
+const $RingsContainer = styled.div`
   table {
     margin: 100px auto;
     border-collapse: separate;
@@ -14,45 +14,43 @@ const $ExpertsContainer = styled.div`
   }
 `;
 
-const Experts = () => {
+const Rings = () => {
   const {controller} = useController();
-  const [experts, setExperts] = useState();
+  const [ringsData, setRingsData] = useState();
 
   useEffect(() => {
-    controller.getExperts()
-      .then((data) => setExperts(data));
+    controller.getRings()
+      .then((data) => setRingsData(data));
   }, []);
 
   return (
-    <$ExpertsContainer>
-      {experts &&
+    <$RingsContainer>
+      {ringsData &&
       <table>
 
         <thead>
         <tr>
           <th>id</th>
-          <th>name</th>
-          <th>last_name</th>
-          <th>club</th>
-          <th>ring</th>
+          <th>breed</th>
+          <th>show</th>
+          <th>experts</th>
         </tr>
         </thead>
 
         <tbody>
-        {experts.results.map((item, index) =>
+        {ringsData.results.map((item, index) =>
           <tr key={index}>
             <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.last_name}</td>
-            <td>{item.club}</td>
-            <td>{item.ring || '-'}</td>
+            <td>{item.breed}</td>
+            <td>{item.show}</td>
+            <td>{item.experts.join(', ')}</td>
           </tr>
         )}
         </tbody>
       </table>
       }
-    </$ExpertsContainer>
+    </$RingsContainer>
   )
 }
 
-export default observer(Experts);
+export default observer(Rings);

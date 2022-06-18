@@ -60,4 +60,6 @@ urlpatterns = [
 
     path('all_experts/', AllExpertsView.as_view(), name='all_experts'),
     path('all_participants/', AllParticipantsView.as_view(), name='all_participants'),
+    path('all_shows/', AllShowsView.as_view(),
+         name='all_shows'),
 ]

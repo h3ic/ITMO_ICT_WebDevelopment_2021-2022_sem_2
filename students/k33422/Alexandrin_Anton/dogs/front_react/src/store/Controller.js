@@ -46,32 +46,57 @@ class Controller {
       })
   }
 
-  getUser = async () => {
-    await axios.get(`${this.BACK}/auth/users/me/`)
-      .then(({data}) => {
-        this.userData = data
-      });
+  getUser = () => {
+    return axios.get(`${this.BACK}/auth/users/me/`)
+      .then(({data}) => data);
   }
 
   getExperts = () => {
-    axios.get(`${this.BACK}/all_experts/`)
-      .then(({data}) => {
-        this.expertsData = data
-      });
+    return axios.get(`${this.BACK}/all_experts/`)
+      .then(({data}) => data);
   }
 
-  getParticipants = (page) => {
+  getParticipants = (page, minAge, maxAge, isOrdered) => {
     const params = {
       params: {
-        page: page
+        page: page,
+        age_min: minAge,
+        age_max: maxAge,
+        ordering: isOrdered ? 'vaccinated' : 'age'
       }
     }
     return axios.get(`${this.BACK}/all_participants/`, params)
-      .then(({data}) => {
-        console.log(data);
-        return data;
-        // this.participantsData = data
-      });
+      .then(({data}) => data);
+  }
+
+  getRings = (searchParams) => {
+    const params = {
+      params: {
+        search: searchParams,
+      }
+    }
+    return axios.get(`${this.BACK}/rings_search/`, params)
+      .then(({data}) => data);
+  }
+
+  getShows = () => {
+    return axios.get(`${this.BACK}/all_shows/`)
+      .then(({data}) => data);
+  }
+
+  getReport = (year) => {
+    return axios.get(`${this.BACK}/report/${year}`, )
+      .then(({data}) => data);
+  }
+
+  getBreedExperts = () => {
+    return axios.get(`${this.BACK}/breed_experts/`, )
+      .then(({data}) => data);
+  }
+
+  getBreedsCount = () => {
+    return axios.get(`${this.BACK}/breeds_count/`, )
+      .then(({data}) => data);
   }
 }
 

@@ -21,12 +21,13 @@ const $FormContainer = styled.div`
 
 const Profile = () => {
   const {controller} = useController();
+  const [profileData, setProfileData] = useState();
 
   useEffect(() => {
-    controller.getUser();
+    controller.getUser()
+      .then((data) => setProfileData(data));
   }, []);
 
-  const profileData = controller.userData;
   console.log(profileData);
 
   return (

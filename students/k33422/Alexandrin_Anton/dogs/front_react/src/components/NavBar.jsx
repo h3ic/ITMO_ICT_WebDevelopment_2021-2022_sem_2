@@ -58,6 +58,10 @@ const NavBar = () => {
         link: '/participants'
       },
       {
+        label: 'Rings',
+        link: '/rings'
+      },
+      {
         label: 'Report',
         link: '/report'
       },

@@ -9,6 +9,7 @@ import Logout from './pages/Logout';
 import Profile from './pages/Profile';
 import Experts from './pages/Experts';
 import Participants from './pages/Participants';
+import Rings from './pages/Rings';
 import Report from './pages/Report';
 import Misc from './pages/Misc';
 
@@ -27,8 +28,9 @@ function App() {
             <Route path={'profile'} element={<Profile/>}/>
             <Route path={'experts'} element={<Experts/>}/>
             <Route path={'participants'} element={<Participants/>}/>
-            {/*<Route path={'report'} element={<Report/>}/>*/}
-            {/*<Route path={'misc'} element={<Misc/>}/>*/}
+            <Route path={'rings'} element={<Rings/>}/>
+            <Route path={'report'} element={<Report/>}/>
+            <Route path={'misc'} element={<Misc/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
