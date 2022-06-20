@@ -15,7 +15,8 @@ import {Radio, RadioGroup} from "@mui/material";
 const $RingsContainer = styled.div`
   margin: 250px auto;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  column-gap: 50px;
   align-items: center;
 
   h2 {

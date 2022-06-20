@@ -39,7 +39,6 @@ const Experts = () => {
     align-items: center;
   `;
 
-
   return (
     <$Cont>
 

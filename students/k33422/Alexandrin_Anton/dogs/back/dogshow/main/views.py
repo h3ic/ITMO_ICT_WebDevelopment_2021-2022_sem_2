@@ -251,3 +251,8 @@ class ParticipantPhotoView(generics.ListAPIView):
 class ParticipantUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ParticipantSerializer
     queryset = Participant.objects.all()
+
+
+class ParticipantDeleteAPIView(generics.DestroyAPIView):
+    serializer_class = ParticipantSerializer
+    queryset = Participant.objects.all()

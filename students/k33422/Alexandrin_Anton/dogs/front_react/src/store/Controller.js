@@ -134,6 +134,11 @@ class Controller {
     return axios.patch(`${this.BACK}/update_participant/${id}`, info)
       .then(({data}) => data);
   }
+
+  deleteParticipant = (id) => {
+    return axios.delete(`${this.BACK}/delete_participant/${id}`)
+      .then(({data}) => data);
+  }
 }
 
 const controller = new Controller();

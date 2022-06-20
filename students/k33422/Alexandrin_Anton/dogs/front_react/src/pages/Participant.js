@@ -101,19 +101,26 @@ const Participant = () => {
     }
   }
 
+  const handleDeleteParticipant = () => {
+    controller.deleteParticipant(controller.currParticipantId);
+    navigate('/participants');
+  }
+
   return (
     <$Container>
       <div style={{display: 'flex', alignItems: 'center',
         justifyContent: 'center',
         gap: 20, marginBottom: 20, }}>
+
         <h2>{participantData?.name}</h2>
+
         <div style={{display: 'flex', columnGap: 20, justifySelf: 'flex-end',
         position: 'absolute', right: 20, top: 20}}>
+
           <$Button onClick={() => setEditable(prevState => !prevState)}>
-            {/*{isEditable ? 'Close' : 'Edit'}*/}
             {isEditable ? <CancelIcon/> : <BorderColorIcon/>}
           </$Button>
-          <$Button>
+          <$Button onClick={handleDeleteParticipant}>
             <DeleteForeverIcon/>
           </$Button>
         </div>
