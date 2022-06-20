@@ -2,6 +2,7 @@ import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
+import {$Button} from "../utils";
 
 const $Container = styled.div`
   table {
@@ -28,6 +29,7 @@ const $ShowsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  row-gap: 10px;
 `;
 
 const $ReportContainer = styled.div`
@@ -38,14 +40,14 @@ const $ReportContainer = styled.div`
   }
 `;
 
-const $Button = styled.button`
-  cursor: pointer;
-  background: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 10px;
-`;
+// const $Button = styled.button`
+//   cursor: pointer;
+//   background: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   column-gap: 10px;
+// `;
 
 const Report = () => {
   const {controller} = useController();

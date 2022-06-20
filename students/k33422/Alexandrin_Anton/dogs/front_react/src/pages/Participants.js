@@ -5,12 +5,20 @@ import useController from "../store";
 import styled from 'styled-components';
 import {Checkbox, Input} from "@mui/material";
 import {pagination} from "../utils";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const $ParticipantsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 250px;
+  column-gap: 100px;
   
   h2 {
     position: absolute;
@@ -26,20 +34,19 @@ const $TableContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   
-  table {
-    margin: 0 100px;
-    height: 100%;
-    border-collapse: separate;
-
-    td, th {
-      padding: 5px 10px;
-    }
+  a {
+    padding: 10px;
+    background: wheat;
+    border-radius: 4px;
   }
 `;
 
-const $FiltersContainer = styled.div`
+const $FiltersContainer = styled(Paper)`
+  margin-top: 10px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
 `;
 
 const Participants = () => {
@@ -106,44 +113,46 @@ const Participants = () => {
       <$TableContainer>
 
         {participants &&
-        <table>
+          <TableContainer component={Paper} style={{marginBottom: 50}}>
+        <Table>
 
-          <thead>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>age</th>
-            <th>breed</th>
-            <th>dismissed</th>
-            <th>club</th>
-            <th>previous_vaccination</th>
-            <th>vaccinated</th>
-          </tr>
-          </thead>
+          <TableHead>
+          <TableRow>
+            <TableCell>id</TableCell>
+            <TableCell>name</TableCell>
+            <TableCell>age</TableCell>
+            <TableCell>breed</TableCell>
+            <TableCell>dismissed</TableCell>
+            <TableCell>club</TableCell>
+            <TableCell>previous_vaccination</TableCell>
+            <TableCell>vaccinated</TableCell>
+          </TableRow>
+          </TableHead>
 
-          <tbody>
+          <TableBody>
           {participants.results.map((item, index) =>
-            <tr key={index}>
-              <td>{item.id}</td>
-              <td>
+            <TableRow key={index}>
+              <TableCell>{item.id}</TableCell>
+              <TableCell>
                 <NavLink to={`/participant/${item.id}`}
                          onClick={() =>
                            controller.setCurrParticipantId(item.id)}>
                   {item.name}
                 </NavLink>
-              </td>
-              <td>{item.age}</td>
-              <td>{item.breed}</td>
-              <td>
+              </TableCell>
+              <TableCell>{item.age}</TableCell>
+              <TableCell>{item.breed}</TableCell>
+              <TableCell>
                 <Checkbox checked={item.dismissed}/>
-              </td>
-              <td>{item.club}</td>
-              <td>{item.previous_vaccination || '-'}</td>
-              <td>{item.vaccinated}</td>
-            </tr>
+              </TableCell>
+              <TableCell>{item.club}</TableCell>
+              <TableCell>{item.previous_vaccination || '-'}</TableCell>
+              <TableCell>{item.vaccinated}</TableCell>
+            </TableRow>
           )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
+          </TableContainer>
         }
 
         {pagination(participants, handlePaginationClick)}

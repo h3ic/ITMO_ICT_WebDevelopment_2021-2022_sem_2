@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from '@mui/material/Button';
 
 export const formReducer = (state, e) => {
   return {
@@ -17,13 +18,14 @@ const $Pagination = styled.div`
   column-gap: 10px;
 `;
 
-export const $Button = styled.button`
+export const $Button = styled(Button)`
   cursor: pointer;
-  background: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'};
+  background-color: ${({isActive}) => isActive ? 'darkgray' : 'lightgray'} !important;
   display: flex;
   justify-content: center;
   align-items: center;
   column-gap: 10px;
+  color: black !important;
 `;
 
 
@@ -32,6 +34,7 @@ export const pagination = (data, handlePaginationClick) => {
   for (let i = 1; i <= data?.num_pages; i++) {
     buttons.push(
       <$Button
+        variant={'contained'}
         key={i}
         onClick={() => handlePaginationClick(i)}
         isActive={data?.page_number === i}>

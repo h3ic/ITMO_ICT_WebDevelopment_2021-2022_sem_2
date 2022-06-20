@@ -5,13 +5,23 @@ import {useNavigate} from "react-router-dom";
 import styled from 'styled-components';
 import {Input} from "@mui/material";
 import {formReducer, $Button} from "../utils";
+import {Paper} from "@mui/material";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import CancelIcon from '@mui/icons-material/Cancel';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-const $Container = styled.div`
-  margin: 100px auto;
+const $Container = styled(Paper)`
+  margin: 100px 300px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  position: relative;
+
+  h2 {
+    margin-bottom: 20px;
+  }
 
   button {
     height: 36px;
@@ -93,11 +103,20 @@ const Participant = () => {
 
   return (
     <$Container>
-      <div style={{display: 'flex', alignItems: 'center', gap: 30}}>
+      <div style={{display: 'flex', alignItems: 'center',
+        justifyContent: 'center',
+        gap: 20, marginBottom: 20, }}>
         <h2>{participantData?.name}</h2>
-        <$Button onClick={() => setEditable(prevState => !prevState)}>
-          {isEditable ? 'Close' : 'Edit'}
-        </$Button>
+        <div style={{display: 'flex', columnGap: 20, justifySelf: 'flex-end',
+        position: 'absolute', right: 20, top: 20}}>
+          <$Button onClick={() => setEditable(prevState => !prevState)}>
+            {/*{isEditable ? 'Close' : 'Edit'}*/}
+            {isEditable ? <CancelIcon/> : <BorderColorIcon/>}
+          </$Button>
+          <$Button>
+            <DeleteForeverIcon/>
+          </$Button>
+        </div>
       </div>
       {!isEditable
         ? <$InfoContainer>
@@ -118,7 +137,7 @@ const Participant = () => {
                 name={entry[0]}
                 // placeholder={entry[1]}
                 value={formData[entry[0]] || entry[1] || ''}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}/>
             </label>
           )
           }

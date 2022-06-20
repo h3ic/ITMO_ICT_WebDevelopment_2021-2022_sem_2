@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useState} from "react";
 import styled from "styled-components";
 import useController from "../store";
+import Paper from '@mui/material/Paper'
 
 const $FormContainer = styled.div`
   width: 400px;
@@ -30,6 +31,7 @@ const Profile = () => {
 
   return (
     <$FormContainer>
+      <Paper style={{padding: '50px 20px'}}>
       <h2>Profile</h2>
 
       {profileData &&
@@ -45,6 +47,7 @@ const Profile = () => {
         </span>
       </div>
       }
+      </Paper>
 
     </$FormContainer>
   )

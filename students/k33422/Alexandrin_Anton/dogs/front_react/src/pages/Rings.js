@@ -3,6 +3,14 @@ import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
 import {pagination} from "../utils";
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import {Radio, RadioGroup} from "@mui/material";
 
 const $RingsContainer = styled.div`
   margin: 250px auto;
@@ -23,21 +31,19 @@ const $TableContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  table {
-    margin: 0 100px;
-    height: 100%;
-    border-collapse: separate;
-
-    td, th {
-      padding: 5px 10px;
-    }
-  }
 `;
 
-const $FiltersContainer = styled.div`
+const $FiltersContainer = styled(Paper)`
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
+  margin: 20px;
+  padding: 30px;
+  
+  fieldset div label {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const Rings = () => {
@@ -81,59 +87,66 @@ const Rings = () => {
       <h2>Rings</h2>
       <$FiltersContainer>
         <fieldset>
-          <legend>Type of shows</legend>
-          <label>
-            <input type='radio' name={'showType'} value={'mono'} onChange={handleShowTypeChange}/>
-            Mono
-          </label>
-          <label>
-            <input type='radio' name={'showType'} value={'poly'} onChange={handleShowTypeChange}/>
-            Poly
-          </label>
+          <RadioGroup>
+            <legend>Type of shows</legend>
+            <label>
+              <Radio type='radio' name={'showType'} value={'mono'} onChange={handleShowTypeChange}/>
+              Mono
+            </label>
+            <label>
+              <Radio type='radio' name={'showType'} value={'poly'} onChange={handleShowTypeChange}/>
+              Poly
+            </label>
+          </RadioGroup>
         </fieldset>
 
         <fieldset>
-          <legend>Breed of rings</legend>
-          <label>
-            <input type='radio' name={'breed'} value={'b'} onChange={handleBreedChange}/>
-            Bulldog
-          </label>
-          <label>
-            <input type='radio' name={'breed'} value={'r'} onChange={handleBreedChange}/>
-            Retriever
-          </label>
-          <label>
-            <input type='radio' name={'breed'} value={'p'} onChange={handleBreedChange}/>
-            Poodle
-          </label>
+          <RadioGroup>
+            <legend>Breed of rings</legend>
+            <label>
+
+              <Radio type='radio' name={'breed'} value={'b'} onChange={handleBreedChange}/>
+              Bulldog
+            </label>
+            <label>
+              <Radio type='radio' name={'breed'} value={'r'} onChange={handleBreedChange}/>
+              Retriever
+            </label>
+            <label>
+              <Radio type='radio' name={'breed'} value={'p'} onChange={handleBreedChange}/>
+              Poodle
+            </label>
+          </RadioGroup>
         </fieldset>
       </$FiltersContainer>
 
       <$TableContainer>
 
         {ringsData &&
-        <table>
+        <TableContainer component={Paper} style={{marginBottom: 50}}>
+          <Table>
 
-          <thead>
-          <tr>
-            <th>id</th>
-            <th>breed</th>
-            <th>show</th>
-            <th>experts</th>
-          </tr>
-          </thead>
+            <TableHead>
+              <TableRow>
+                <TableCell>id</TableCell>
+                <TableCell>breed</TableCell>
+                <TableCell>show</TableCell>
+                <TableCell>experts</TableCell>
+              </TableRow>
+            </TableHead>
 
-          <tbody>
-          {ringsData.results.map((item, index) =>
-            <tr key={index}>
-              <td>{item.id}</td>
-              <td>{item.breed}</td>
-              <td>{item.show}</td>
-              <td>{item.experts.join(', ')}</td>
-            </tr>
-          )}
-          </tbody>
-        </table>
+            <TableBody>
+              {ringsData.results.map((item, index) =>
+                <TableRow key={index}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.breed}</TableCell>
+                  <TableCell>{item.show}</TableCell>
+                  <TableCell>{item.experts.join(', ')}</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
         }
 
         {pagination(ringsData, handlePaginationClick)}

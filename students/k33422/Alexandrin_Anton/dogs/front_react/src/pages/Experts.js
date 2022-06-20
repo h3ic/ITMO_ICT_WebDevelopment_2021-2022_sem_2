@@ -1,21 +1,22 @@
+import * as React from 'react';
 import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import useController from "../store";
 import styled from 'styled-components';
 import {pagination} from "../utils";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const $ExpertsContainer = styled.div`
   h2 {
     margin-top: 170px;
   }
-  table {
-    margin: 100px auto;
-    border-collapse: separate;
-    
-    td, th {
-      padding: 5px 10px;
-    }
-  }
+  width: 1094px;
 `;
 
 const Experts = () => {
@@ -32,37 +33,49 @@ const Experts = () => {
     setCurrPage(pageNum);
   }
 
+  const $Cont = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
+
   return (
+    <$Cont>
+
     <$ExpertsContainer>
       <h2>Experts</h2>
       {experts &&
-      <table>
+      <TableContainer component={Paper} style={{marginBottom: 50}}>
+        <Table style={{margin: '50px 200px', width: '600px'}}>
 
-        <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>last_name</th>
-          <th>club</th>
-          <th>ring</th>
-        </tr>
-        </thead>
+          <TableHead>
+            <TableRow>
+              <TableCell>id</TableCell>
+              <TableCell>name</TableCell>
+              <TableCell>last_name</TableCell>
+              <TableCell>club</TableCell>
+              <TableCell>ring</TableCell>
+            </TableRow>
+          </TableHead>
 
-        <tbody>
-        {experts?.results.map((item, index) =>
-          <tr key={index}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.last_name}</td>
-            <td>{item.club}</td>
-            <td>{item.ring || '-'}</td>
-          </tr>
-        )}
-        </tbody>
-      </table>
+          <TableBody>
+            {experts?.results.map((item, index) =>
+              <TableRow key={index}>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.last_name}</TableCell>
+                <TableCell>{item.club}</TableCell>
+                <TableCell>{item.ring || '-'}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
       }
       {experts && pagination(experts, handlePaginationClick)}
     </$ExpertsContainer>
+    </$Cont>
   )
 }
 
