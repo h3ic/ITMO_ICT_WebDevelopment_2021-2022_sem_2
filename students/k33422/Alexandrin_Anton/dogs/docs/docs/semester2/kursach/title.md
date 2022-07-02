@@ -1,1 +1,1 @@
-![](../imgs/title.png)
+![](../imgs/govorov_mudak.png)
